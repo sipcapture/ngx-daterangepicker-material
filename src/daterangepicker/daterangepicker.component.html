@@ -89,18 +89,22 @@
         </div>
         <div class="calendar-time" *ngIf="timePicker">
             <div class="select">
-                <select class="hourselect select-item" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedHour" (ngModelChange)="timeChanged($event, sideEnum.left)">
+                <input type="text" class="hourselect select-item" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedHour" (ngModelChange)="timeChanged($event, sideEnum.left)">
+                <!--
                     <option *ngFor="let i of timepickerVariables.left.hours"
                     [value]="i"
                     [disabled]="timepickerVariables.left.disabledHours.indexOf(i) > -1">{{i}}</option>
                 </select>
+                -->
             </div>
             <div class="select">
-                <select class="select-item minuteselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedMinute" (ngModelChange)="timeChanged($event, sideEnum.left)">
+                <input type="text" class="select-item minuteselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedMinute" (ngModelChange)="timeChanged($event, sideEnum.left)">
+                <!--
                     <option *ngFor="let i of timepickerVariables.left.minutes; let index = index;"
                     [value]="i"
                     [disabled]="timepickerVariables.left.disabledMinutes.indexOf(i) > -1">{{timepickerVariables.left.minutesLabel[index]}}</option>
                 </select>
+                -->
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div>
