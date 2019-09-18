@@ -19,20 +19,8 @@
   ],
   "homepage": "https://github.com/fetrarij/ngx-daterangepicker-material",
   "license": "MIT",
-  "main": "dist/index.js",
-  "typings": "dist/index.d.ts",
-  "scripts": {
-    "ng": "ng",
-    "prepare": "npm run build",    
-    "start": "ng serve",
-    "demo:build": "ng build --prod",
-    "test": "./node_modules/.bin/ng test --watch=false",
-    "lint": "ng lint",
-    "e2e": "ng e2e",
-    "ngc": "./node_modules/.bin/ngc -p tsconfig.json",
-    "gh-pages": "ng build --prod --base-href=\"/ngx-daterangepicker-material/\" && ngh --dir demo/dist",
-    "build": "ng-packagr -p package.json"
-  },
+  "main": "bundles/ngx-daterangepicker-material.umd.js",
+  "typings": "ngx-daterangepicker-material.d.ts",
   "author": "Fetrarijaona R.",
   "repository": {
     "type": "git",
@@ -81,16 +69,15 @@
     "zone.js": "^0.8.17"
   },
   "$schema": "./node_modules/ng-packagr/package.schema.json",
-  "ngPackage": {
-    "lib": {
-      "entryFile": "src/daterangepicker/index.ts",
-      "umdModuleIds": {
-        "moment": "moment"
-      }
-    },
-    "dest": "dist"
-  },
   "dependencies": {
     "tslib": "^1.9.0"
-  }
+  },
+  "module": "fesm5/ngx-daterangepicker-material.js",
+  "es2015": "fesm2015/ngx-daterangepicker-material.js",
+  "esm5": "esm5/ngx-daterangepicker-material.js",
+  "esm2015": "esm2015/ngx-daterangepicker-material.js",
+  "fesm5": "fesm5/ngx-daterangepicker-material.js",
+  "fesm2015": "fesm2015/ngx-daterangepicker-material.js",
+  "metadata": "ngx-daterangepicker-material.metadata.json",
+  "sideEffects": false
 }
