@@ -250,8 +250,8 @@ export class DaterangepickerComponent implements OnInit {
             selected = this.endDate.clone(),
             minDate = this.startDate;
         }
-        const start = this.timePicker24Hour ? 0 : 1;
-        const end = this.timePicker24Hour ? 23 : 12;
+        const start = this.timePicker24Hour ? "00" : "01";
+        const end = this.timePicker24Hour ? "23" : "12";
         this.timepickerVariables[side] = {
             hours: [],
             minutes: [],
@@ -261,11 +261,17 @@ export class DaterangepickerComponent implements OnInit {
             disabledHours: [],
             disabledMinutes: [],
             disabledSeconds: [],
-            selectedHour: 0,
-            selectedMinute: 0,
-            selectedSecond: 0,
+            selectedHour: "00",
+            selectedMinute: "00",
+            selectedSecond: "00",
         };
+        
+        this.timepickerVariables[side].selectedHour = selected.hour();
+        this.timepickerVariables[side].selectedMinute = selected.minute();
+        this.timepickerVariables[side].selectedSecond = selected.second();
+        
         // generate hours
+        /*
         for (let i = start; i <= end; i++) {
             let i_in_24 = i;
             if (!this.timePicker24Hour) {
@@ -331,6 +337,7 @@ export class DaterangepickerComponent implements OnInit {
                 }
             }
         }
+        */
         // generate AM/PM
         if (!this.timePicker24Hour) {
 
@@ -737,9 +744,33 @@ export class DaterangepickerComponent implements OnInit {
     timeChanged(timeEvent: any, side: SideEnum) {
 
         let hour = parseInt(this.timepickerVariables[side].selectedHour, 10);
-        const minute = parseInt(this.timepickerVariables[side].selectedMinute, 10);
-        const second = this.timePickerSeconds ? parseInt(this.timepickerVariables[side].selectedSecond, 10) : 0;
-
+        let minute = parseInt(this.timepickerVariables[side].selectedMinute, 10);
+        let second = this.timePickerSeconds ? parseInt(this.timepickerVariables[side].selectedSecond, 10) : 0;
+        
+        //let hour = this.timepickerVariables[side].selectedHour;
+        //const minute = this.timepickerVariables[side].selectedMinute;
+        //const second = this.timePickerSeconds ? this.timepickerVariables[side].selectedSecond : 0;
+        if(hour < 10) this.timepickerVariables[side].selectedHour = '0' + this.timepickerVariables[side].selectedHour;
+        if(minute < 10) this.timepickerVariables[side].selectedMinute = '0' + this.timepickerVariables[side].selectedMinute;
+        if(second < 10) this.timepickerVariables[side].selectedSecond = '0' + this.timepickerVariables[side].selectedSecond;
+        
+        if(hour > 23) {
+                this.timepickerVariables[side].selectedHour = '23'; 
+                hour = 23;
+        }
+        
+        if(minute > 59) {
+            this.timepickerVariables[side].selectedMinute = '59';
+            minute = 59;
+        }
+        
+        if(second < 10) {
+            this.timepickerVariables[side].selectedSecond = '59';
+            second = 59;
+        }
+        
+        console.log("JOPA", this.timepickerVariables[side].selectedHour);            
+        
         if (!this.timePicker24Hour) {
             const ampm = this.timepickerVariables[side].ampmModel;
             if (ampm === 'PM' && hour < 12) {
