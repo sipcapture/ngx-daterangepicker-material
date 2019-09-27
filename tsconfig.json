@@ -22,7 +22,8 @@
     "skipTemplateCodegen": true,
     "skipMetadataEmit": false,
     "strictMetadataEmit": true,
-    "annotationsAs": "decorators"
+    "annotationsAs": "decorators",
+    "enableIvy": "ngtsc"    
   },
   "include": [
     "src/**/*"

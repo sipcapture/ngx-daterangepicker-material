@@ -17,5 +17,8 @@
       "dom"
     ]
   },
+  "angularCompilerOptions": {
+    "enableIvy": "ngtsc"
+  },
   "exclude": ["dist", ".ng_build", "integration"]
 }
