@@ -23,7 +23,6 @@
   "typings": "dist/index.d.ts",
   "scripts": {
     "ng": "ng",
-    "prepare": "npm run build",
     "start": "ng serve",
     "demo:build": "ng build --prod",
     "test": "./node_modules/.bin/ng test --watch=false",

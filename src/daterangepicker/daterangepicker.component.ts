@@ -78,6 +78,8 @@ export class DaterangepickerComponent implements OnInit {
     timePickerIncrement = 1;
     @Input()
     timePickerSeconds: Boolean = false;
+    @Input()
+    timeInput = false;
     // end of timepicker variables
     @Input()
     showClearButton: Boolean = false;
@@ -250,6 +252,7 @@ export class DaterangepickerComponent implements OnInit {
             selected = this.endDate.clone(),
             minDate = this.startDate;
         }
+        if(this.timeInput===true){
         const start = this.timePicker24Hour ? "00" : "01";
         const end = this.timePicker24Hour ? "23" : "12";
         this.timepickerVariables[side] = {
@@ -269,9 +272,24 @@ export class DaterangepickerComponent implements OnInit {
         this.timepickerVariables[side].selectedHour = selected.hour();
         this.timepickerVariables[side].selectedMinute = selected.minute();
         this.timepickerVariables[side].selectedSecond = selected.second();
-        
+        }else{
+        const start = this.timePicker24Hour ? 0 : 1;
+        const end = this.timePicker24Hour ? 23 : 12;
+        this.timepickerVariables[side] = {
+            hours: [],
+            minutes: [],
+            minutesLabel: [],
+            seconds: [],
+            secondsLabel: [],
+            disabledHours: [],
+            disabledMinutes: [],
+            disabledSeconds: [],
+            selectedHour: 0,
+            selectedMinute: 0,
+            selectedSecond: 0,
+        };
         // generate hours
-        /*
+        
         for (let i = start; i <= end; i++) {
             let i_in_24 = i;
             if (!this.timePicker24Hour) {
@@ -337,7 +355,7 @@ export class DaterangepickerComponent implements OnInit {
                 }
             }
         }
-        */
+        }
         // generate AM/PM
         if (!this.timePicker24Hour) {
 
@@ -768,9 +786,6 @@ export class DaterangepickerComponent implements OnInit {
             this.timepickerVariables[side].selectedSecond = '59';
             second = 59;
         }
-        
-        console.log("JOPA", this.timepickerVariables[side].selectedHour);            
-        
         if (!this.timePicker24Hour) {
             const ampm = this.timepickerVariables[side].ampmModel;
             if (ampm === 'PM' && hour < 12) {
@@ -1238,5 +1253,33 @@ export class DaterangepickerComponent implements OnInit {
             }
         }
         return false;
+    }
+    inputSwitch(e) {
+        var target = e.srcElement || e.target;
+        var maxLength = parseInt(target.attributes["maxlength"].value, 10);
+        var myLength = target.value.length;
+        if (myLength >= maxLength) {
+            var next = target;
+            while (next = next.parentElement.nextElementSibling.firstElementChild) {
+                if (next == null)
+                    break;
+                if (next.tagName.toLowerCase() === "input") {
+                    next.focus();
+                    break;
+                }
+            }
+        }
+        // Move to previous field if empty (user pressed backspace)
+        else if (myLength === 0) {
+            var previous = target;
+            while (previous = previous.parentElement.previousElementSibling.firstElementChild) {
+                if (previous == null)
+                    break;
+                if (previous.tagName.toLowerCase() === "input") {
+                    previous.focus();
+                    break;
+                }
+            }
+        }
     }
 }

@@ -310,7 +310,9 @@ $input-height: 3rem !default;
       // TODO: Should this be static or should it be parameterized?
       border-radius: 0;
     }
-
+    &.in-range:hover{
+      border-radius: 0;
+    }
     &.start-date {
       border-radius: 2em 0 0 2em;
     }
@@ -450,41 +452,21 @@ $input-height: 3rem !default;
         }
       }
     }
-  }
-
-  .calendar-time {
-    text-align: center;
-    margin: 4px auto 0 auto;
-    line-height: 30px;
-    position: relative;
     .input {
       display: inline;
       .input-item {
         display: inline-block;
-        width: 60px;
+        width: 44px;
         position: relative;
         font-family: inherit;
         background-color: transparent;
-        padding: 10px 10px 10px 0;
+        text-align: center;
+        padding: 5px;
+        padding-bottom: 0px;
         font-size: 18px;
         border-radius: 0;
         border: none;
         border-bottom: 1px solid rgba(0,0,0, 0.12);
-        /* Remove focus */
-        &:after {
-          position: absolute;
-          top: 18px;
-          right: 10px;
-          /* Styling the down arrow */
-          width: 0;
-          height: 0;
-          padding: 0;
-          content: '';
-          border-left: 6px solid transparent;
-          border-right: 6px solid transparent;
-          border-top: 6px solid rgba(0, 0, 0, 0.12);
-          pointer-events: none;
-        }
         &:focus {
           outline: none;
         }
@@ -782,7 +764,11 @@ $input-height: 3rem !default;
     }
   }
 }
-
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
 @media (min-width: 730px) {
   .md-drppicker {
     .ranges {
