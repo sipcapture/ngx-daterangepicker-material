@@ -87,9 +87,26 @@
                 </tbody>
             </table>
         </div>
-        <div class="calendar-time" *ngIf="timePicker">
-            <div class="select" *ngIf="!timeInput">
-                <select  class="hourselect select-item" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedHour" (ngModelChange)="timeChanged($event, sideEnum.left)">
+        <div class="calendar-time" *ngIf="timePicker && timeInput">
+            <div class="input">
+                <input (keypress)="numberOnly($event)" type="number" maxLength="2" class="input-item hourselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedHour" (ngModelChange)="timeChanged($event, sideEnum.left)" (keyup)="inputSwitch($event)">
+                <span class="select-highlight"></span>
+                <span class="select-bar"></span>
+            </div>
+            <div class="input">
+                <input (keypress)="numberOnly($event)" type="number" maxLength="2" class="input-item minuteselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedMinute" (ngModelChange)="timeChanged($event, sideEnum.left)" (keyup)="inputSwitch($event)">
+                <span class="select-highlight"></span>
+                <span class="select-bar"></span>
+            </div>
+            <div class="input">                            
+                <input (keypress)="numberOnly($event)" type="number" maxLength="2" *ngIf="timePickerSeconds" class="input-item secondselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedSecond" (ngModelChange)="timeChanged($event, sideEnum.left)" (keyup)="inputSwitch($event)">
+                <span class="select-highlight"></span>
+                <span class="select-bar"></span>
+            </div>
+        </div>
+        <div class="calendar-time" *ngIf="timePicker && !timeInput">
+            <div class="select">
+                <select class="select-item hourselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedHour" (ngModelChange)="timeChanged($event, sideEnum.left)">
                     <option *ngFor="let i of timepickerVariables.left.hours"
                     [value]="i"
                     [disabled]="timepickerVariables.left.disabledHours.indexOf(i) > -1">{{i}}</option>
@@ -97,11 +114,8 @@
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div> 
-            <div class="input" *ngIf="timeInput">
-                <input  type="number" min="1" max="24" maxLength="2" class="hourselect input-item" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedHour" (ngModelChange)="timeChanged($event, sideEnum.left)"  (keyup)="inputSwitch($event)">
-            </div>
-            <div class="select" *ngIf="!timeInput">                
-                <select  class="select-item minuteselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedMinute" (ngModelChange)="timeChanged($event, sideEnum.left)">
+            <div class="select">
+                <select class="select-item minuteselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedMinute" (ngModelChange)="timeChanged($event, sideEnum.left)">
                     <option *ngFor="let i of timepickerVariables.left.minutes; let index = index;"
                     [value]="i"
                     [disabled]="timepickerVariables.left.disabledMinutes.indexOf(i) > -1">{{timepickerVariables.left.minutesLabel[index]}}</option>
@@ -109,13 +123,8 @@
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div> 
-            <div class="input" *ngIf="timeInput">
-                <input  type="number" maxLength="2" class="input-item minuteselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedMinute" (ngModelChange)="timeChanged($event, sideEnum.left)" (keyup)="inputSwitch($event)">
-                <span class="select-highlight"></span>
-                <span class="select-bar"></span>
-            </div>
-            <div class="select" *ngIf="!timeInput">                
-                <select class="select-item secondselect" *ngIf="timePickerSeconds" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedSecond" (ngModelChange)="timeChanged($event, sideEnum.left)">
+            <div class="select">
+                <select *ngIf="timePickerSeconds" class="select-item secondselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedSecond" (ngModelChange)="timeChanged($event, sideEnum.left)">
                     <option *ngFor="let i of timepickerVariables.left.seconds; let index = index;"
                     [value]="i"
                     [disabled]="timepickerVariables.left.disabledSeconds.indexOf(i) > -1">{{timepickerVariables.left.secondsLabel[index]}}</option>
@@ -123,13 +132,8 @@
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div> 
-            <div class="input" *ngIf="timeInput">
-                <input type="number" maxLength="2" class="input-item secondselect" *ngIf="timePickerSeconds" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedSecond" (ngModelChange)="timeChanged($event, sideEnum.left)" (keyup)="inputSwitch($event)">
-                <span class="select-highlight"></span>
-                <span class="select-bar"></span>
-            </div>
             <div class="select">
-                <select class="select-item ampmselect" *ngIf="!timePicker24Hour" [(ngModel)]="timepickerVariables.left.ampmModel" (ngModelChange)="timeChanged($event, sideEnum.left)">
+                <select *ngIf="!timePicker24Hour" class="select-item ampmselect" [(ngModel)]="timepickerVariables.left.ampmModel" (ngModelChange)="timeChanged($event, sideEnum.left)">
                     <option value="AM" [disabled]="timepickerVariables.left.amDisabled">AM</option>
                     <option value="PM"  [disabled]="timepickerVariables.left.pmDisabled">PM</option>
                 </select>
@@ -207,8 +211,25 @@
                 </tbody>
             </table>
         </div>
-        <div class="calendar-time" *ngIf="timePicker">
-            <div class="select" *ngIf="!timeInput">
+        <div class="calendar-time" *ngIf="timePicker && timeInput">
+            <div class="input">
+                <input (keypress)="numberOnly($event)" type="number" maxLength="2" class="input-item hourselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.right.selectedHour" (ngModelChange)="timeChanged($event, sideEnum.right)" (keyup)="inputSwitch($event)">
+                <span class="select-highlight"></span>
+                <span class="select-bar"></span>
+            </div>
+            <div class="input">
+                <input (keypress)="numberOnly($event)" type="number" maxLength="2" class="input-item minuteselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.right.selectedMinute" (ngModelChange)="timeChanged($event, sideEnum.right)" (keyup)="inputSwitch($event)">
+                <span class="select-highlight"></span>
+                <span class="select-bar"></span>
+            </div>
+            <div class="input">
+                <input (keypress)="numberOnly($event)" type="number" maxLength="2" *ngIf="timePickerSeconds" class="input-item secondselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.right.selectedSecond" (ngModelChange)="timeChanged($event, sideEnum.right)" (keyup)="inputSwitch($event)">
+                <span class="select-highlight"></span>
+                <span class="select-bar"></span>
+            </div>
+        </div>
+        <div class="calendar-time" *ngIf="timePicker && !timeInput">
+            <div class="select">
                 <select class="select-item hourselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.right.selectedHour" (ngModelChange)="timeChanged($event, sideEnum.right)">
                     <option *ngFor="let i of timepickerVariables.right.hours"
                     [value]="i"
@@ -217,12 +238,7 @@
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div> 
-            <div class="input" *ngIf="timeInput">
-                <input  type="number" maxLength="2" class="input-item hourselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.right.selectedHour" (ngModelChange)="timeChanged($event, sideEnum.right)" (keyup)="inputSwitch($event)">
-                <span class="select-highlight"></span>
-                <span class="select-bar"></span>
-            </div>
-            <div class="select" *ngIf="!timeInput">
+            <div class="select">
                 <select class="select-item minuteselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.right.selectedMinute" (ngModelChange)="timeChanged($event, sideEnum.right)">
                     <option *ngFor="let i of timepickerVariables.right.minutes; let index = index;"
                     [value]="i"
@@ -231,12 +247,7 @@
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div> 
-            <div class="input" *ngIf="timeInput">
-                <input  type="number" maxLength="2" class="input-item minuteselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.right.selectedMinute" (ngModelChange)="timeChanged($event, sideEnum.right)" (keyup)="inputSwitch($event)">
-                <span class="select-highlight"></span>
-                <span class="select-bar"></span>
-            </div>
-            <div class="select" *ngIf="!timeInput">
+            <div class="select">
                 <select *ngIf="timePickerSeconds" class="select-item secondselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.right.selectedSecond" (ngModelChange)="timeChanged($event, sideEnum.right)">
                     <option *ngFor="let i of timepickerVariables.right.seconds; let index = index;"
                     [value]="i"
@@ -245,11 +256,6 @@
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div> 
-            <div class="input" *ngIf="timeInput">
-                <input type="number" maxLength="2" *ngIf="timePickerSeconds" class="input-item secondselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.right.selectedSecond" (ngModelChange)="timeChanged($event, sideEnum.right)" (keyup)="inputSwitch($event)">
-                <span class="select-highlight"></span>
-                <span class="select-bar"></span>
-            </div>
             <div class="select">
                 <select *ngIf="!timePicker24Hour" class="select-item ampmselect" [(ngModel)]="timepickerVariables.right.ampmModel" (ngModelChange)="timeChanged($event, sideEnum.right)">
                     <option value="AM" [disabled]="timepickerVariables.right.amDisabled">AM</option>

@@ -284,9 +284,9 @@ export class DaterangepickerComponent implements OnInit {
             disabledHours: [],
             disabledMinutes: [],
             disabledSeconds: [],
-            selectedHour: 0,
-            selectedMinute: 0,
-            selectedSecond: 0,
+            selectedHour: "00",
+            selectedMinute: "00",
+            selectedSecond: "00",
         };
         // generate hours
         
@@ -771,6 +771,10 @@ export class DaterangepickerComponent implements OnInit {
         if(hour < 10) this.timepickerVariables[side].selectedHour = '0' + this.timepickerVariables[side].selectedHour;
         if(minute < 10) this.timepickerVariables[side].selectedMinute = '0' + this.timepickerVariables[side].selectedMinute;
         if(second < 10) this.timepickerVariables[side].selectedSecond = '0' + this.timepickerVariables[side].selectedSecond;
+
+        console.log("this.timepickerVariables[side].selectedHour", this.timepickerVariables[side].selectedHour);
+        console.log("this.timepickerVariables[side].selectedMinute", this.timepickerVariables[side].selectedMinute);
+        console.log("this.timepickerVariables[side].selectedSecond", this.timepickerVariables[side].selectedSecond);
         
         if(hour > 23) {
                 this.timepickerVariables[side].selectedHour = '23'; 
@@ -1254,12 +1258,28 @@ export class DaterangepickerComponent implements OnInit {
         }
         return false;
     }
+  
+    numberOnly(event:any): boolean {  
+        const charCode = (event.which) ? event.which : event.keyCode;  
+        if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !=46 ) {  
+              return false;  
+        }  
+        var target = event.srcElement || event.target;
+        var maxLength = parseInt(target.attributes["maxLength"].value, 10);
+        var myLength = target.value.length;
+        if (myLength >= maxLength) return false
+        
+        return true;  
+    }  
+    
+    
     inputSwitch(e) {
         var target = e.srcElement || e.target;
         var maxLength = parseInt(target.attributes["maxlength"].value, 10);
         var myLength = target.value.length;
         if (myLength >= maxLength) {
             var next = target;
+            if(!target.parentElement.nextElementSibling) return;
             while (next = next.parentElement.nextElementSibling.firstElementChild) {
                 if (next == null)
                     break;
@@ -1272,6 +1292,7 @@ export class DaterangepickerComponent implements OnInit {
         // Move to previous field if empty (user pressed backspace)
         else if (myLength === 0) {
             var previous = target;
+            if(!target.parentElement.nextElementSibling) return;
             while (previous = previous.parentElement.previousElementSibling.firstElementChild) {
                 if (previous == null)
                     break;
