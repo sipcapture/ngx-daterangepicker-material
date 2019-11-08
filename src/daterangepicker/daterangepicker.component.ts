@@ -252,41 +252,42 @@ export class DaterangepickerComponent implements OnInit {
             selected = this.endDate.clone(),
             minDate = this.startDate;
         }
-        if(this.timeInput===true){
-        const start = this.timePicker24Hour ? "00" : "01";
-        const end = this.timePicker24Hour ? "23" : "12";
-        this.timepickerVariables[side] = {
-            hours: [],
-            minutes: [],
-            minutesLabel: [],
-            seconds: [],
-            secondsLabel: [],
-            disabledHours: [],
-            disabledMinutes: [],
-            disabledSeconds: [],
-            selectedHour: "00",
-            selectedMinute: "00",
-            selectedSecond: "00",
-        };
-        
-        this.timepickerVariables[side].selectedHour = selected.hour();
-        this.timepickerVariables[side].selectedMinute = selected.minute();
-        this.timepickerVariables[side].selectedSecond = selected.second();
+        if(this.timeInput===true){            
+            const start = this.timePicker24Hour ? "00" : "01";
+            const end = this.timePicker24Hour ? "23" : "12";
+            this.timepickerVariables[side] = {
+                hours: [],
+                minutes: [],
+                minutesLabel: [],
+                seconds: [],
+                secondsLabel: [],
+                disabledHours: [],
+                disabledMinutes: [],
+                disabledSeconds: [],
+                selectedHour: "00",
+                selectedMinute: "00",
+                selectedSecond: "00",
+            };
+            
+            this.timepickerVariables[side].selectedHour = selected.hour() < 10 ? '0'+selected.hour() : selected.hour();
+            this.timepickerVariables[side].selectedMinute = selected.minute() < 10 ? '0'+selected.minute() : selected.minute();
+            this.timepickerVariables[side].selectedSecond = selected.second() < 10 ? '0'+selected.second() : selected.second();
+
         }else{
-        const start = this.timePicker24Hour ? 0 : 1;
-        const end = this.timePicker24Hour ? 23 : 12;
-        this.timepickerVariables[side] = {
-            hours: [],
-            minutes: [],
-            minutesLabel: [],
-            seconds: [],
-            secondsLabel: [],
-            disabledHours: [],
-            disabledMinutes: [],
-            disabledSeconds: [],
-            selectedHour: "00",
-            selectedMinute: "00",
-            selectedSecond: "00",
+            const start = this.timePicker24Hour ? 0 : 1;
+            const end = this.timePicker24Hour ? 23 : 12;
+            this.timepickerVariables[side] = {
+                hours: [],
+                minutes: [],
+                minutesLabel: [],
+                seconds: [],
+                secondsLabel: [],
+                disabledHours: [],
+                disabledMinutes: [],
+                disabledSeconds: [],
+                selectedHour: "00",
+                selectedMinute: "00",
+                selectedSecond: "00",
         };
         // generate hours
         
@@ -772,24 +773,14 @@ export class DaterangepickerComponent implements OnInit {
         if(minute < 10) this.timepickerVariables[side].selectedMinute = '0' + this.timepickerVariables[side].selectedMinute;
         if(second < 10) this.timepickerVariables[side].selectedSecond = '0' + this.timepickerVariables[side].selectedSecond;
 
+        /*
+        console.log("side", side);
+        console.log("event", timeEvent);
         console.log("this.timepickerVariables[side].selectedHour", this.timepickerVariables[side].selectedHour);
         console.log("this.timepickerVariables[side].selectedMinute", this.timepickerVariables[side].selectedMinute);
-        console.log("this.timepickerVariables[side].selectedSecond", this.timepickerVariables[side].selectedSecond);
-        
-        if(hour > 23) {
-                this.timepickerVariables[side].selectedHour = '23'; 
-                hour = 23;
-        }
-        
-        if(minute > 59) {
-            this.timepickerVariables[side].selectedMinute = '59';
-            minute = 59;
-        }
-        
-        if(second < 10) {
-            this.timepickerVariables[side].selectedSecond = '59';
-            second = 59;
-        }
+        console.log("this.timepickerVariables[side].selectedSecond", this.timepickerVariables[side].selectedSecond);       
+        */
+
         if (!this.timePicker24Hour) {
             const ampm = this.timepickerVariables[side].ampmModel;
             if (ampm === 'PM' && hour < 12) {
