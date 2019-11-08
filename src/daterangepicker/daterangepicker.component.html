@@ -264,7 +264,18 @@
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div>
-        </div>
+        </div>       
+    </div>
+    <div class="calendar-table" *ngIf="timeZone">
+        <div class="select">
+            <select class="select-item hourselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.right.selectedHour" (ngModelChange)="timeChanged($event, sideEnum.right)">
+                <option *ngFor="let i of timepickerVariables.right.hours"
+                [value]="i"
+                [disabled]="timepickerVariables.right.disabledHours.indexOf(i) > -1">{{i}}</option>
+            </select>
+            <span class="select-highlight"></span>
+            <span class="select-bar"></span>
+        </div>            
     </div>
     <div class="buttons" *ngIf="!autoApply && ( !rangesArray.length || (showCalInRanges && !singleDatePicker))">
         <div class="buttons_input">

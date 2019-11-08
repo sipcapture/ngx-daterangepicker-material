@@ -19,7 +19,7 @@ import {
 } from '@angular/core';
 import { DaterangepickerComponent } from './daterangepicker.component';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import * as _moment from 'moment';
+import * as _moment from 'moment-timezone';
 import { LocaleConfig } from './daterangepicker.config';
 import { LocaleService } from './locale.service';
 const moment = _moment;
@@ -110,6 +110,8 @@ export class DaterangepickerDirective implements OnInit, OnChanges, DoCheck {
   timePickerSeconds: Boolean = false;
   @Input()
   timeInput = false;
+  @Input()
+  timeZone = false;
   @Input() closeOnAutoApply = true;
   _locale: LocaleConfig = {};
   @Input() set locale(value) {

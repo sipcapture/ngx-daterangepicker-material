@@ -80,6 +80,8 @@ export class DaterangepickerComponent implements OnInit {
     timePickerSeconds: Boolean = false;
     @Input()
     timeInput = false;
+    @Input()
+    timeZone = false;
     // end of timepicker variables
     @Input()
     showClearButton: Boolean = false;
