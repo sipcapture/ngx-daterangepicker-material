@@ -21,6 +21,8 @@ export declare class DaterangepickerComponent implements OnInit {
         left: any;
         right: any;
     };
+    timepickerTimezone: string;
+    timepickerListZones: string[];
     daterangepicker: {
         start: FormControl;
         end: FormControl;
@@ -48,6 +50,8 @@ export declare class DaterangepickerComponent implements OnInit {
     timePicker24Hour: Boolean;
     timePickerIncrement: number;
     timePickerSeconds: Boolean;
+    timeInput: boolean;
+    timeZone: boolean;
     showClearButton: Boolean;
     firstMonthDayClass: string;
     lastMonthDayClass: string;
@@ -120,6 +124,11 @@ export declare class DaterangepickerComponent implements OnInit {
      */
     timeChanged(timeEvent: any, side: SideEnum): void;
     /**
+     * called when timeZone is changed
+     * @param timeEvent  an event
+     */
+    timeZoneChanged(timeEvent: any): void;
+    /**
      *  call when month or year changed
      * @param month month number 0 -11
      * @param year year eg: 1995
@@ -187,4 +196,6 @@ export declare class DaterangepickerComponent implements OnInit {
      * (as opposed to consisting of only previous/next month days)
      */
     hasCurrentMonthDays(currentMonth: any, row: any): boolean;
+    numberOnly(event: any): boolean;
+    inputSwitch(e: any): void;
 }

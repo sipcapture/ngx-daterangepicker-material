@@ -27,7 +27,9 @@
     "url": "https://github.com/fetrarij/ngx-daterangepicker-material.git"
   },
   "peerDependencies": {
-    "moment": "^2.21.0"
+    "moment": "^2.21.0",
+    "@types/moment-timezone": "^0.5.12",
+    "moment-timezone": "^0.5.27"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.13.8",
@@ -58,7 +60,7 @@
     "karma-jasmine": "~1.1.2",
     "karma-jasmine-html-reporter": "^0.2.2",
     "materialize-css": "^1.0.0",
-    "moment": "^2.22.2",
+    "moment": "^2.24.0",
     "ng-packagr": "^5.1.0",
     "protractor": "~5.4.0",
     "rimraf": "^2.6.1",

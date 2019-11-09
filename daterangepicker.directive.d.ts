@@ -1,6 +1,6 @@
 import { ViewContainerRef, ComponentFactoryResolver, ElementRef, ChangeDetectorRef, OnInit, OnChanges, SimpleChanges, DoCheck, KeyValueDiffers, EventEmitter, Renderer2 } from '@angular/core';
 import { DaterangepickerComponent } from './daterangepicker.component';
-import * as _moment from 'moment';
+import * as _moment from 'moment-timezone';
 import { LocaleConfig } from './daterangepicker.config';
 import { LocaleService } from './locale.service';
 export declare class DaterangepickerDirective implements OnInit, OnChanges, DoCheck {
@@ -49,6 +49,8 @@ export declare class DaterangepickerDirective implements OnInit, OnChanges, DoCh
     timePicker24Hour: Boolean;
     timePickerIncrement: number;
     timePickerSeconds: Boolean;
+    timeInput: boolean;
+    timeZone: boolean;
     closeOnAutoApply: boolean;
     _locale: LocaleConfig;
     locale: any;
