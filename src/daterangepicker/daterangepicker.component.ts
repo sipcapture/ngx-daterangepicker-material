@@ -33,6 +33,8 @@ export class DaterangepickerComponent implements OnInit {
     chosenLabel: string;
     calendarVariables: {left: any, right: any} = {left: {}, right: {}};
     timepickerVariables: {left: any, right: any} = {left: {}, right: {}};
+    timepickerTimezone = moment.tz.guess(true);
+    timepickerListZones = moment.tz.names();    
     daterangepicker: {start: FormControl, end: FormControl} = {start: new FormControl(), end: new FormControl()};
     applyBtn: {disabled: boolean} = {disabled: false};
     @Input()
@@ -153,6 +155,10 @@ export class DaterangepickerComponent implements OnInit {
     }
 
     ngOnInit() {
+
+        /* changed moment to new timezone */
+        moment.tz.setDefault(this.timepickerTimezone);
+
         this._buildLocale();
         const daysOfWeek = [...this.locale.daysOfWeek];
         if (this.locale.firstDay !== 0) {
@@ -178,11 +184,12 @@ export class DaterangepickerComponent implements OnInit {
           this.setEndDate(this.endDate);
           this.renderTimePicker(SideEnum.right);
         }
-
+        
         this.updateMonthsInView();
         this.renderCalendar(SideEnum.left);
         this.renderCalendar(SideEnum.right);
-        this.renderRanges();
+        this.renderRanges();        
+        
     }
     renderRanges() {
         this.rangesArray = [];
@@ -818,6 +825,22 @@ export class DaterangepickerComponent implements OnInit {
         // re-render the time pickers because changing one selection can affect what's enabled in another
         this.renderTimePicker(SideEnum.left);
         this.renderTimePicker(SideEnum.right);
+
+        if (this.autoApply) {
+          this.clickApply();
+        }
+    }
+    /**
+     * called when timeZone is changed
+     * @param timeEvent  an event
+     */
+    timeZoneChanged(timeEvent: any) {
+        
+        /* changed moment to new timezone */
+        moment.tz.setDefault(this.timepickerTimezone);
+        
+        // update the calendars so all clickable dates reflect the new time component
+        this.updateCalendars();
 
         if (this.autoApply) {
           this.clickApply();
