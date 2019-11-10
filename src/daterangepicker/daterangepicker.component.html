@@ -89,17 +89,17 @@
         </div>
         <div class="calendar-time" *ngIf="timePicker && timeInput">
             <div class="input">
-                <input (keypress)="numberOnly($event)" type="number" maxLength="2" class="input-item hourselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedHour" (ngModelChange)="timeChanged($event, sideEnum.left)" (keyup)="inputSwitch($event)">
+                <input (keypress)="checkTime($event, sideEnum.left)" type="number" maxLength="2" class="input-item hourselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedHour" (ngModelChange)="timeChanged($event, sideEnum.left)">
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div>
             <div class="input">
-                <input (keypress)="numberOnly($event)" type="number" maxLength="2" class="input-item minuteselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedMinute" (ngModelChange)="timeChanged($event, sideEnum.left)" (keyup)="inputSwitch($event)">
+                <input (keypress)="checkTime($event, sideEnum.left)" type="number" maxLength="2" class="input-item minuteselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedMinute" (ngModelChange)="timeChanged($event, sideEnum.left)">
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div>
             <div class="input">                            
-                <input (keypress)="numberOnly($event)" type="number" maxLength="2" *ngIf="timePickerSeconds" class="input-item secondselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedSecond" (ngModelChange)="timeChanged($event, sideEnum.left)" (keyup)="inputSwitch($event)">
+                <input (keypress)="checkTime($event, sideEnum.left)" type="number" maxLength="2" *ngIf="timePickerSeconds" class="input-item secondselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.left.selectedSecond" (ngModelChange)="timeChanged($event, sideEnum.left)">
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div>
@@ -213,17 +213,17 @@
         </div>
         <div class="calendar-time" *ngIf="timePicker && timeInput">
             <div class="input">
-                <input (keypress)="numberOnly($event)" type="number" maxLength="2" class="input-item hourselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.right.selectedHour" (ngModelChange)="timeChanged($event, sideEnum.right)" (keyup)="inputSwitch($event)">
+                <input (keypress)="checkTime($event, sideEnum.right)" type="number" maxLength="2" class="input-item hourselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.right.selectedHour" (ngModelChange)="timeChanged($event, sideEnum.right)">
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div>
             <div class="input">
-                <input (keypress)="numberOnly($event)" type="number" maxLength="2" class="input-item minuteselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.right.selectedMinute" (ngModelChange)="timeChanged($event, sideEnum.right)" (keyup)="inputSwitch($event)">
+                <input (keypress)="checkTime($event, sideEnum.right)" type="number" maxLength="2" class="input-item minuteselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.right.selectedMinute" (ngModelChange)="timeChanged($event, sideEnum.right)">
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div>
             <div class="input">
-                <input (keypress)="numberOnly($event)" type="number" maxLength="2" *ngIf="timePickerSeconds" class="input-item secondselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.right.selectedSecond" (ngModelChange)="timeChanged($event, sideEnum.right)" (keyup)="inputSwitch($event)">
+                <input (keypress)="checkTime($event, sideEnum.right)" type="number" maxLength="2" *ngIf="timePickerSeconds" class="input-item secondselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.right.selectedSecond" (ngModelChange)="timeChanged($event, sideEnum.right)">
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div>

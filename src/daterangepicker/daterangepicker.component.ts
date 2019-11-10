@@ -779,15 +779,20 @@ export class DaterangepickerComponent implements OnInit {
         //const minute = this.timepickerVariables[side].selectedMinute;
         //const second = this.timePickerSeconds ? this.timepickerVariables[side].selectedSecond : 0;
         if(hour < 10) this.timepickerVariables[side].selectedHour = '0' + this.timepickerVariables[side].selectedHour;
+        else this.timepickerVariables[side].selectedHour = '0';
         if(minute < 10) this.timepickerVariables[side].selectedMinute = '0' + this.timepickerVariables[side].selectedMinute;
+        else this.timepickerVariables[side].selectedMinute = minute;
         if(second < 10) this.timepickerVariables[side].selectedSecond = '0' + this.timepickerVariables[side].selectedSecond;
-
+        else this.timepickerVariables[side].selectedSecond = second;
+        
         /*
-        console.log("side", side);
-        console.log("event", timeEvent);
-        console.log("this.timepickerVariables[side].selectedHour", this.timepickerVariables[side].selectedHour);
-        console.log("this.timepickerVariables[side].selectedMinute", this.timepickerVariables[side].selectedMinute);
-        console.log("this.timepickerVariables[side].selectedSecond", this.timepickerVariables[side].selectedSecond);       
+        console.log("side1", side);
+        console.log("event1", timeEvent);
+        console.log("hour", hour);
+        console.log("minute", minute);
+        console.log("1this.timepickerVariables[side].selectedHour", this.timepickerVariables[side].selectedHour);
+        console.log("1this.timepickerVariables[side].selectedMinute", this.timepickerVariables[side].selectedMinute);
+        console.log("2this.timepickerVariables[side].selectedSecond", this.timepickerVariables[side].selectedSecond);       
         */
 
         if (!this.timePicker24Hour) {
@@ -841,6 +846,13 @@ export class DaterangepickerComponent implements OnInit {
         
         // update the calendars so all clickable dates reflect the new time component
         this.updateCalendars();
+
+        // update the all ememnets
+       this.updateElement();
+
+        // re-render the time pickers because changing one selection can affect what's enabled in another
+        this.renderTimePicker(SideEnum.left);
+        this.renderTimePicker(SideEnum.right);
 
         if (this.autoApply) {
           this.clickApply();
@@ -1275,7 +1287,7 @@ export class DaterangepickerComponent implements OnInit {
         return false;
     }
   
-    numberOnly(event:any): boolean {  
+    checkTime(event:any, side: SideEnum): boolean {  
         const charCode = (event.which) ? event.which : event.keyCode;  
         if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !=46 ) {  
               return false;  
@@ -1283,40 +1295,13 @@ export class DaterangepickerComponent implements OnInit {
         var target = event.srcElement || event.target;
         var maxLength = parseInt(target.attributes["maxLength"].value, 10);
         var myLength = target.value.length;
-        if (myLength >= maxLength) return false
-        
+
+        if (myLength == maxLength) {
+            target.value = target.value.slice(1);
+        }
+
+        if (myLength > maxLength) return false;
+
         return true;  
     }  
-    
-    
-    inputSwitch(e) {
-        var target = e.srcElement || e.target;
-        var maxLength = parseInt(target.attributes["maxlength"].value, 10);
-        var myLength = target.value.length;
-        if (myLength >= maxLength) {
-            var next = target;
-            if(!target.parentElement.nextElementSibling) return;
-            while (next = next.parentElement.nextElementSibling.firstElementChild) {
-                if (next == null)
-                    break;
-                if (next.tagName.toLowerCase() === "input") {
-                    next.focus();
-                    break;
-                }
-            }
-        }
-        // Move to previous field if empty (user pressed backspace)
-        else if (myLength === 0) {
-            var previous = target;
-            if(!target.parentElement.nextElementSibling) return;
-            while (previous = previous.parentElement.previousElementSibling.firstElementChild) {
-                if (previous == null)
-                    break;
-                if (previous.tagName.toLowerCase() === "input") {
-                    previous.focus();
-                    break;
-                }
-            }
-        }
-    }
 }
