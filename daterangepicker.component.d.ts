@@ -196,6 +196,5 @@ export declare class DaterangepickerComponent implements OnInit {
      * (as opposed to consisting of only previous/next month days)
      */
     hasCurrentMonthDays(currentMonth: any, row: any): boolean;
-    numberOnly(event: any): boolean;
-    inputSwitch(e: any): void;
+    checkTime(event: any, side: SideEnum): boolean;
 }
