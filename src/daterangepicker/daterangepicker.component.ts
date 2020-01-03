@@ -142,6 +142,8 @@ export class DaterangepickerComponent implements OnInit {
     @Output() choosedDate: EventEmitter<Object>;
     @Output() rangeClicked: EventEmitter<Object>;
     @Output() datesUpdated: EventEmitter<Object>;
+    @Output() startDateChanged: EventEmitter<Object>;
+    @Output() endDateChanged: EventEmitter<Object>;
     @ViewChild('pickerContainer') pickerContainer: ElementRef;
 
     constructor(
@@ -152,6 +154,8 @@ export class DaterangepickerComponent implements OnInit {
         this.choosedDate = new EventEmitter();
         this.rangeClicked = new EventEmitter();
         this.datesUpdated = new EventEmitter();
+        this.startDateChanged = new EventEmitter();
+        this.endDateChanged = new EventEmitter();
     }
 
     ngOnInit() {
@@ -484,8 +488,9 @@ export class DaterangepickerComponent implements OnInit {
         if (this.showDropdowns) {
             const currentMonth = calendar[1][1].month();
             const currentYear = calendar[1][1].year();
-            const maxYear = (maxDate && maxDate.year()) || (currentYear + 5);
-            const minYear = (minDate && minDate.year()) || (currentYear - 50);
+            const realCurrentYear = moment().year();
+            const maxYear = (maxDate && maxDate.year()) || (realCurrentYear + 5);
+            const minYear = (minDate && minDate.year()) || (realCurrentYear - 50);
             const inMinYear = currentYear === minYear;
             const inMaxYear = currentYear === maxYear;
             const years = [];
@@ -541,7 +546,7 @@ export class DaterangepickerComponent implements OnInit {
         if (!this.isShown) {
             this.updateElement();
         }
-
+        this.startDateChanged.emit({startDate: this.startDate});
         this.updateMonthsInView();
     }
 
@@ -578,6 +583,7 @@ export class DaterangepickerComponent implements OnInit {
         if (!this.isShown) {
             // this.updateElement();
         }
+        this.endDateChanged.emit({endDate: this.endDate});
         this.updateMonthsInView();
     }
     @Input()
@@ -1038,10 +1044,19 @@ export class DaterangepickerComponent implements OnInit {
                 if (!this.alwaysShowCalendars) {
                     return  this.clickApply();
                 }
-                this.leftCalendar.month.month(dates[0].month());
-                this.leftCalendar.month.year(dates[0].year());
-                this.rightCalendar.month.month(dates[1].month());
-                this.rightCalendar.month.year(dates[1].year());
+                if (this.maxDate && this.maxDate.isSame(dates[0], 'month')) {
+                    this.rightCalendar.month.month(dates[0].month());
+                    this.rightCalendar.month.year(dates[0].year());
+                    this.leftCalendar.month.month(dates[0].month() - 1);
+                    this.leftCalendar.month.year(dates[1].year() );
+                } else {
+                    this.leftCalendar.month.month(dates[0].month());
+                    this.leftCalendar.month.year(dates[0].year());
+                    // get the next year
+                    const nextMonth = dates[0].clone().add(1, 'month');
+                    this.rightCalendar.month.month(nextMonth.month());
+                    this.rightCalendar.month.year(nextMonth.year() );
+                }
                 this.updateCalendars();
                 if (this.timePicker) {
                     this.renderTimePicker(SideEnum.left);
@@ -1103,6 +1118,9 @@ export class DaterangepickerComponent implements OnInit {
         for (const key in locale) {
           if (locale.hasOwnProperty(key)) {
             this.locale[key] = locale[key];
+            if (key === 'customRangeLabel') {
+                this.renderRanges();
+            }
           }
         }
     }
@@ -1234,7 +1252,7 @@ export class DaterangepickerComponent implements OnInit {
                 }
                 // don't allow selection of date if a custom function decides it's invalid
                 if (this.isInvalidDate(calendar[row][col])) {
-                    classes.push('off', 'disabled');
+                    classes.push('off', 'disabled', 'invalid');
                 }
                 // highlight the currently selected start date
                 if (this.startDate && calendar[row][col].format('YYYY-MM-DD') === this.startDate.format('YYYY-MM-DD')) {
