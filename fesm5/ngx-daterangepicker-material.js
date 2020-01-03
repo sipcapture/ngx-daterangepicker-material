@@ -113,6 +113,8 @@ var DaterangepickerComponent = /** @class */ (function () {
         this.choosedDate = new EventEmitter();
         this.rangeClicked = new EventEmitter();
         this.datesUpdated = new EventEmitter();
+        this.startDateChanged = new EventEmitter();
+        this.endDateChanged = new EventEmitter();
     }
     DaterangepickerComponent_1 = DaterangepickerComponent;
     Object.defineProperty(DaterangepickerComponent.prototype, "locale", {
@@ -446,8 +448,9 @@ var DaterangepickerComponent = /** @class */ (function () {
         if (this.showDropdowns) {
             var currentMonth = calendar[1][1].month();
             var currentYear = calendar[1][1].year();
-            var maxYear = (maxDate && maxDate.year()) || (currentYear + 5);
-            var minYear = (minDate && minDate.year()) || (currentYear - 50);
+            var realCurrentYear = moment$1().year();
+            var maxYear = (maxDate && maxDate.year()) || (realCurrentYear + 5);
+            var minYear = (minDate && minDate.year()) || (realCurrentYear - 50);
             var inMinYear = currentYear === minYear;
             var inMaxYear = currentYear === maxYear;
             var years = [];
@@ -495,6 +498,7 @@ var DaterangepickerComponent = /** @class */ (function () {
         if (!this.isShown) {
             this.updateElement();
         }
+        this.startDateChanged.emit({ startDate: this.startDate });
         this.updateMonthsInView();
     };
     DaterangepickerComponent.prototype.setEndDate = function (endDate) {
@@ -520,6 +524,7 @@ var DaterangepickerComponent = /** @class */ (function () {
             this.endDate = this.startDate.clone().add(this.dateLimit, 'day');
         }
         if (!this.isShown) ;
+        this.endDateChanged.emit({ endDate: this.endDate });
         this.updateMonthsInView();
     };
     DaterangepickerComponent.prototype.isInvalidDate = function (date) {
@@ -967,10 +972,20 @@ var DaterangepickerComponent = /** @class */ (function () {
                 if (!this.alwaysShowCalendars) {
                     return this.clickApply();
                 }
-                this.leftCalendar.month.month(dates[0].month());
-                this.leftCalendar.month.year(dates[0].year());
-                this.rightCalendar.month.month(dates[1].month());
-                this.rightCalendar.month.year(dates[1].year());
+                if (this.maxDate && this.maxDate.isSame(dates[0], 'month')) {
+                    this.rightCalendar.month.month(dates[0].month());
+                    this.rightCalendar.month.year(dates[0].year());
+                    this.leftCalendar.month.month(dates[0].month() - 1);
+                    this.leftCalendar.month.year(dates[1].year());
+                }
+                else {
+                    this.leftCalendar.month.month(dates[0].month());
+                    this.leftCalendar.month.year(dates[0].year());
+                    // get the next year
+                    var nextMonth = dates[0].clone().add(1, 'month');
+                    this.rightCalendar.month.month(nextMonth.month());
+                    this.rightCalendar.month.year(nextMonth.year());
+                }
                 this.updateCalendars();
                 if (this.timePicker) {
                     this.renderTimePicker(SideEnum.left);
@@ -1023,6 +1038,9 @@ var DaterangepickerComponent = /** @class */ (function () {
         for (var key in locale) {
             if (locale.hasOwnProperty(key)) {
                 this.locale[key] = locale[key];
+                if (key === 'customRangeLabel') {
+                    this.renderRanges();
+                }
             }
         }
     };
@@ -1145,7 +1163,7 @@ var DaterangepickerComponent = /** @class */ (function () {
                 }
                 // don't allow selection of date if a custom function decides it's invalid
                 if (this.isInvalidDate(calendar[row][col])) {
-                    classes.push('off', 'disabled');
+                    classes.push('off', 'disabled', 'invalid');
                 }
                 // highlight the currently selected start date
                 if (this.startDate && calendar[row][col].format('YYYY-MM-DD') === this.startDate.format('YYYY-MM-DD')) {
@@ -1376,6 +1394,14 @@ var DaterangepickerComponent = /** @class */ (function () {
         __metadata("design:type", EventEmitter)
     ], DaterangepickerComponent.prototype, "datesUpdated", void 0);
     __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], DaterangepickerComponent.prototype, "startDateChanged", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], DaterangepickerComponent.prototype, "endDateChanged", void 0);
+    __decorate([
         ViewChild('pickerContainer'),
         __metadata("design:type", ElementRef)
     ], DaterangepickerComponent.prototype, "pickerContainer", void 0);
@@ -1449,6 +1475,8 @@ var DaterangepickerDirective = /** @class */ (function () {
         this.onChange = new EventEmitter();
         this.rangeClicked = new EventEmitter();
         this.datesUpdated = new EventEmitter();
+        this.startDateChanged = new EventEmitter();
+        this.endDateChanged = new EventEmitter();
         this.drops = 'down';
         this.opens = 'auto';
         var componentFactory = this._componentFactoryResolver.resolveComponentFactory(DaterangepickerComponent);
@@ -1506,6 +1534,12 @@ var DaterangepickerDirective = /** @class */ (function () {
     });
     DaterangepickerDirective.prototype.ngOnInit = function () {
         var _this = this;
+        this.picker.startDateChanged.asObservable().subscribe(function (itemChanged) {
+            _this.startDateChanged.emit(itemChanged);
+        });
+        this.picker.endDateChanged.asObservable().subscribe(function (itemChanged) {
+            _this.endDateChanged.emit(itemChanged);
+        });
         this.picker.rangeClicked.asObservable().subscribe(function (range) {
             _this.rangeClicked.emit(range);
         });
@@ -1864,6 +1898,14 @@ var DaterangepickerDirective = /** @class */ (function () {
         Output('datesUpdated'),
         __metadata("design:type", EventEmitter)
     ], DaterangepickerDirective.prototype, "datesUpdated", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], DaterangepickerDirective.prototype, "startDateChanged", void 0);
+    __decorate([
+        Output(),
+        __metadata("design:type", EventEmitter)
+    ], DaterangepickerDirective.prototype, "endDateChanged", void 0);
     __decorate([
         HostListener('document:click', ['$event']),
         __metadata("design:type", Function),

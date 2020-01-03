@@ -63,6 +63,8 @@ export declare class DaterangepickerDirective implements OnInit, OnChanges, DoCh
     onChange: EventEmitter<Object>;
     rangeClicked: EventEmitter<Object>;
     datesUpdated: EventEmitter<Object>;
+    startDateChanged: EventEmitter<Object>;
+    endDateChanged: EventEmitter<Object>;
     constructor(viewContainerRef: ViewContainerRef, _changeDetectorRef: ChangeDetectorRef, _componentFactoryResolver: ComponentFactoryResolver, _el: ElementRef, _renderer: Renderer2, differs: KeyValueDiffers, _localeService: LocaleService, elementRef: ElementRef);
     ngOnInit(): void;
     ngOnChanges(changes: SimpleChanges): void;

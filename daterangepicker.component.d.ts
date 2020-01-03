@@ -81,6 +81,8 @@ export declare class DaterangepickerComponent implements OnInit {
     choosedDate: EventEmitter<Object>;
     rangeClicked: EventEmitter<Object>;
     datesUpdated: EventEmitter<Object>;
+    startDateChanged: EventEmitter<Object>;
+    endDateChanged: EventEmitter<Object>;
     pickerContainer: ElementRef;
     constructor(el: ElementRef, _ref: ChangeDetectorRef, _localeService: LocaleService);
     ngOnInit(): void;
