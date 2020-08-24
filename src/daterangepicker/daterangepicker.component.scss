@@ -49,7 +49,7 @@ $md-drppicker-cell-border-size: 1px !default;
     overflow: hidden;
     font-size: 14px;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.16), 0 2px 8px 0 rgba(0, 0, 0, 0.12);
-
+    background-color: $md-drppicker-bg-color;
     &.double {
         width: $md-drppicker-width-double;
     }
@@ -94,8 +94,8 @@ $md-drppicker-cell-border-size: 1px !default;
 
     .calendar {
         /* display: none; */
-        max-width: $md-drppicker-width - ($md-drppicker-calendar-margin * 2);
-        margin: $md-drppicker-calendar-margin;
+        width: 100%;
+        margin: 0 auto;
 
         &.single {
             .calendar-table {
@@ -128,6 +128,7 @@ $md-drppicker-cell-border-size: 1px !default;
     }
 
     .ranges {
+        width: 100%;
         float: none;
         text-align: left;
         margin: 0;
@@ -137,23 +138,25 @@ $md-drppicker-cell-border-size: 1px !default;
             margin: 0 auto;
             padding: 0;
             width: 100%;
-
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             li {
                 font-size: 12px;
                 button {
-                    padding: 8px 12px;
+                    padding: 0.2rem 0.7rem;
                     width: 100%;
                     background: none;
                     border: none;
                     text-align: left;
                     cursor: pointer;
                     outline: none;
-
+                    line-height: 32px;
                     &[disabled] {
                         opacity: 0.3;
                     }
 
                     &:active {
+                        border-radius: 3px;
                         background: transparent;
                     }
                 }
@@ -189,7 +192,9 @@ $md-drppicker-cell-border-size: 1px !default;
         &.in-range {
             border-radius: 0;
         }
-
+        &.in-range:hover{
+          border-radius: 0;
+        }
         &.end-date {
             border-radius: 0 2em 2em 0;
         }
@@ -248,7 +253,7 @@ $md-drppicker-cell-border-size: 1px !default;
                     transform: translate(-50%, -50%) rotate(45deg);
                 }
             }
-            
+
             &.calendar-icon--right {
                 &::after {
                     margin-left: -1px;
@@ -285,7 +290,36 @@ $md-drppicker-cell-border-size: 1px !default;
             }
         }
     }
-
+    .input {
+      display: inline;
+      .input-item {
+        display: inline-block;
+        width: 44px;
+        position: relative;
+        font-family: inherit;
+        background-color: transparent;
+        text-align: center;
+        padding: 5px;
+        padding-bottom: 0px;
+        font-size: 18px;
+        border-radius: 0;
+        border: none;
+        border-bottom: 1px solid rgba(0,0,0, 0.12);
+        &:focus {
+          outline: none;
+        }
+        .input-label {
+          color: rgba(0,0,0, 0.26);
+          font-size: 16px;
+          font-weight: normal;
+          position: absolute;
+          pointer-events: none;
+          left: 0;
+          top: 10px;
+          transition: 0.2s ease all;
+        }
+      }
+    }
     .calendar-time select.disabled {
         color: #ccc;
         cursor: not-allowed;
@@ -475,11 +509,15 @@ $md-drppicker-cell-border-size: 1px !default;
         }
     }
 }
-
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
 @media (min-width: 730px) {
     .md-drppicker {
         .ranges {
-            width: auto;
+            width: 100%;
         }
         &.ltr {
             .ranges {
@@ -496,4 +534,7 @@ $md-drppicker-cell-border-size: 1px !default;
             clear: none !important;
         }
     }
+}
+.tab{
+  margin:0 auto
 }

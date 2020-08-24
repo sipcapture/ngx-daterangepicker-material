@@ -16,7 +16,7 @@ import {
     SimpleChanges,
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
-import * as _moment from 'moment';
+import * as _moment from 'moment-timezone';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DaterangepickerComponent } from './daterangepicker.component';
@@ -107,6 +107,10 @@ export class DaterangepickerDirective implements OnInit, OnChanges, OnDestroy {
     timePickerIncrement = 1;
     @Input()
     timePickerSeconds = false;
+    @Input()
+    timeInput = false;
+    @Input()
+    timeZone = false;
     @Input() closeOnAutoApply = true;
     _locale: LocaleConfig = {};
     @Input() set locale(value) {
@@ -257,6 +261,7 @@ export class DaterangepickerDirective implements OnInit, OnChanges, OnDestroy {
         this.componentRef.instance.timePicker = this.timePicker;
         this.componentRef.instance.timePicker24Hour = this.timePicker24Hour;
         this.componentRef.instance.timePickerIncrement = this.timePickerIncrement;
+        this.componentRef.instance.timeZone = this.timeZone;
         this.componentRef.instance.timePickerSeconds = this.timePickerSeconds;
         this.componentRef.instance.closeOnAutoApply = this.closeOnAutoApply;
         this.componentRef.instance.locale = this.locale;

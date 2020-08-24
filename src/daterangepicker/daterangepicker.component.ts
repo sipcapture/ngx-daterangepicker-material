@@ -12,7 +12,7 @@ import {
     ViewEncapsulation,
 } from '@angular/core';
 import { FormControl, NG_VALUE_ACCESSOR } from '@angular/forms';
-import * as _moment from 'moment';
+import * as _moment from 'moment-timezone';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { LocaleConfig } from './daterangepicker.config';
@@ -42,12 +42,29 @@ export enum SideEnum {
     ],
 })
 export class DaterangepickerComponent implements OnInit, OnDestroy {
+    @Input() set locale(value) {
+        this._locale = { ...this._localeService.config, ...value };
+    }
+    get locale(): any {
+        return this._locale;
+    }
+
+    @Input() set ranges(value) {
+        this._ranges = value;
+        this.renderRanges();
+    }
+    get ranges(): any {
+        return this._ranges;
+    }
+
+    constructor(private el: ElementRef, private _ref: ChangeDetectorRef, private _localeService: LocaleService) {}
     private _old: { start: any; end: any } = { start: null, end: null };
     chosenLabel: string;
     calendarVariables: { left: any; right: any } = { left: {}, right: {} };
     tooltiptext = []; // for storing tooltiptext
     timepickerVariables: { left: any; right: any } = { left: {}, right: {} };
-
+    timepickerTimezone = moment.tz.guess(true);
+    timepickerListZones = moment.tz.names();
     daterangepicker: { start: FormControl; end: FormControl } = { start: new FormControl(), end: new FormControl() };
     fromMonthControl = new FormControl();
     fromYearControl = new FormControl();
@@ -98,6 +115,10 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
     timePickerIncrement = 1;
     @Input()
     timePickerSeconds = false;
+    @Input()
+    timeInput = false;
+    @Input()
+    timeZone = false;
     // end of timepicker variables
     @Input()
     showClearButton = false;
@@ -113,22 +134,8 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
     lastDayOfPreviousMonthClass: string = null;
 
     _locale: LocaleConfig = {};
-    @Input() set locale(value) {
-        this._locale = { ...this._localeService.config, ...value };
-    }
-    get locale(): any {
-        return this._locale;
-    }
     // custom ranges
     _ranges: any = {};
-
-    @Input() set ranges(value) {
-        this._ranges = value;
-        this.renderRanges();
-    }
-    get ranges(): any {
-        return this._ranges;
-    }
 
     @Input()
     showCustomRangeLabel: boolean;
@@ -140,19 +147,6 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
     showRangeLabelOnInput = false;
     @Input()
     customRangeDirection = false;
-
-    @Input()
-    isInvalidDate(date: _moment.Moment) {
-        return false;
-    }
-    @Input()
-    isCustomDate(date: _moment.Moment) {
-        return false;
-    }
-    @Input()
-    isTooltipDate(date: _moment.Moment): string {
-        return null;
-    }
 
     chosenRange: string;
     rangesArray: Array<any> = [];
@@ -176,11 +170,25 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
 
     @ViewChild('pickerContainer', { static: true }) pickerContainer: ElementRef;
 
-    constructor(private el: ElementRef, private _ref: ChangeDetectorRef, private _localeService: LocaleService) {}
-
     destroy$ = new Subject();
 
+    @Input()
+    isInvalidDate(date: _moment.Moment) {
+        return false;
+    }
+    @Input()
+    isCustomDate(date: _moment.Moment) {
+        return false;
+    }
+    @Input()
+    isTooltipDate(date: _moment.Moment): string {
+        return null;
+    }
+
     ngOnInit(): void {
+      console.log(this.timeInput)
+        /* changed moment to new timezone */
+        moment.tz.setDefault(this.timepickerTimezone);
         this.fromMonthControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((month) => {
             this.monthChanged(month, SideEnum.left);
         });
@@ -303,12 +311,12 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
             // don't have an end date, use the start date then put the selected time for the right side as the time
             selected = this._getDateWithTime(this.startDate, SideEnum.right);
             if (selected.isBefore(this.startDate)) {
-                selected = this.startDate.clone(); //set it back to the start date the time was backwards
+                selected = this.startDate.clone(); // set it back to the start date the time was backwards
             }
             minDate = this.startDate;
         }
-        const start = this.timePicker24Hour ? 0 : 1;
-        const end = this.timePicker24Hour ? 23 : 12;
+        const start = this.timePicker24Hour ? '0' : '1';
+        const end = this.timePicker24Hour ? '23' : '12';
         this.timepickerVariables[side] = {
             hours: [],
             minutes: [],
@@ -322,73 +330,9 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
             selectedMinute: 0,
             selectedSecond: 0,
         };
-        // generate hours
-        for (let i = start; i <= end; i++) {
-            let i_in_24 = i;
-            if (!this.timePicker24Hour) {
-                i_in_24 = selected.hour() >= 12 ? (i === 12 ? 12 : i + 12) : i === 12 ? 0 : i;
-            }
-
-            const time = selected.clone().hour(i_in_24);
-            let disabled = false;
-            if (minDate && time.minute(59).isBefore(minDate)) {
-                disabled = true;
-            }
-            if (maxDate && time.minute(0).isAfter(maxDate)) {
-                disabled = true;
-            }
-
-            this.timepickerVariables[side].hours.push(i);
-            if (i_in_24 === selected.hour() && !disabled) {
-                this.timepickerVariables[side].selectedHour = i;
-            } else if (disabled) {
-                this.timepickerVariables[side].disabledHours.push(i);
-            }
-        }
-
-        // generate minutes
-        for (let i = 0; i < 60; i += this.timePickerIncrement) {
-            const padded = i < 10 ? '0' + i : i;
-            const time = selected.clone().minute(i);
-
-            let disabled = false;
-            if (minDate && time.second(59).isBefore(minDate)) {
-                disabled = true;
-            }
-            if (maxDate && time.second(0).isAfter(maxDate)) {
-                disabled = true;
-            }
-            this.timepickerVariables[side].minutes.push(i);
-            this.timepickerVariables[side].minutesLabel.push(padded);
-            if (selected.minute() === i && !disabled) {
-                this.timepickerVariables[side].selectedMinute = i;
-            } else if (disabled) {
-                this.timepickerVariables[side].disabledMinutes.push(i);
-            }
-        }
-        // generate seconds
-        if (this.timePickerSeconds) {
-            for (let i = 0; i < 60; i++) {
-                const padded = i < 10 ? '0' + i : i;
-                const time = selected.clone().second(i);
-
-                let disabled = false;
-                if (minDate && time.isBefore(minDate)) {
-                    disabled = true;
-                }
-                if (maxDate && time.isAfter(maxDate)) {
-                    disabled = true;
-                }
-
-                this.timepickerVariables[side].seconds.push(i);
-                this.timepickerVariables[side].secondsLabel.push(padded);
-                if (selected.second() === i && !disabled) {
-                    this.timepickerVariables[side].selectedSecond = i;
-                } else if (disabled) {
-                    this.timepickerVariables[side].disabledSeconds.push(i);
-                }
-            }
-        }
+        this.timepickerVariables[side].selectedHour   = selected.hour();
+        this.timepickerVariables[side].selectedMinute = selected.minute();
+        this.timepickerVariables[side].selectedSecond = selected.second();
         // generate AM/PM
         if (!this.timePicker24Hour) {
             if (minDate && selected.clone().hour(12).minute(0).second(0).isBefore(minDate)) {
@@ -872,7 +816,25 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
             this.clickApply();
         }
     }
+    timeZoneChanged(timeEvent: any) {
 
+      /* changed moment to new timezone */
+      moment.tz.setDefault(this.timepickerTimezone);
+
+      // update the calendars so all clickable dates reflect the new time component
+      this.updateCalendars();
+
+      // update the all ememnets
+     this.updateElement();
+
+      // re-render the time pickers because changing one selection can affect what's enabled in another
+      this.renderTimePicker(SideEnum.left);
+      this.renderTimePicker(SideEnum.right);
+
+      if (this.autoApply) {
+        this.clickApply();
+      }
+    }
     /**
      *  call when month or year changed
      * @param month month number 0 -11
@@ -1372,6 +1334,23 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
             }
         }
         return false;
+    }
+    checkTime(event: any, value): boolean {
+        const charCode = (event.which) ? event.which : event.keyCode;
+        if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 46 ) {
+            return false;
+        }
+        const target = event.srcElement || event.target;
+        const maxLength = parseInt(target.attributes['maxLength'].value, 10);
+        const myLength = target.value.length;
+        if (myLength === maxLength) {
+            target.value = target.value.slice(1);
+        }
+        if (myLength > maxLength) {
+            return false;
+        }
+
+        return true;
     }
 
     /**
