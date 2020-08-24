@@ -191,6 +191,7 @@ $md-drppicker-cell-border-size: 1px !default;
 
         &.in-range {
             border-radius: 0;
+            background-color: $md-drppicker-in-range-bg-color;
         }
         &.in-range:hover{
           border-radius: 0;
@@ -288,6 +289,11 @@ $md-drppicker-cell-border-size: 1px !default;
             mat-select {
                 width: 46px;
             }
+        }
+        .time-label {
+          display: inline-block;
+          text-align: right;
+          width: 40px;
         }
     }
     .input {

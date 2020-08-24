@@ -146,7 +146,7 @@
               </table>
           </div>
         <div class="calendar-time" *ngIf="timePicker"> <!-- start-time with input -->
-          <span>From:</span>
+          <span class='time-label'>From:</span>
             <div class="input">
                 <input (keypress)="checkTime($event, timepickerVariables.left.selectedHour)" type="number" maxLength="2" class="input-item hourselect" [disabled]="!endDate" [ngModel]="timepickerVariables.left.selectedHour | time" (ngModelChange)="timepickerVariables.left.selectedHour = $event; timeChanged(sideEnum.left)">
                 <span class="select-highlight"></span>
@@ -164,7 +164,7 @@
             </div>
         </div>
         <div class="calendar-time" *ngIf="timePicker"> <!-- end-time with input -->
-          <span>To:</span>
+          <span class='time-label'>To:</span>
           <div class="input">
               <input (keypress)="checkTime($event, timepickerVariables.right.selectedHour)" type="number"  maxLength="2" class="input-item hourselect" [disabled]="!endDate" [ngModel]="timepickerVariables.right.selectedHour | time" (ngModelChange)="timepickerVariables.right.selectedHour = $event;timeChanged(sideEnum.right)">
               <span class="select-highlight"></span>
@@ -187,11 +187,11 @@
     <div class="calendar-table" *ngIf="timeZone">
       <div class="select">
           <h3>Displayed timezone select</h3>
-          <select class="select-item hourselect" [disabled]="!endDate" [(ngModel)]="timepickerTimezone" (ngModelChange)="timeZoneChanged($event)">
-              <option *ngFor="let i of timepickerListZones"
+          <mat-select class="select-item hourselect" [disabled]="!endDate" [(ngModel)]="timepickerTimezone" (ngModelChange)="timeZoneChanged($event)">
+              <mat-option *ngFor="let i of timepickerListZones"
               [value]="i"
-              [disabled]="timepickerVariables.right.disabledHours.indexOf(i) > -1">{{i}}</option>
-          </select>
+              [disabled]="timepickerVariables.right.disabledHours.indexOf(i) > -1">{{i}}</mat-option>
+          </mat-select>
           <span class="select-highlight"></span>
           <span class="select-bar"></span>
       </div>
