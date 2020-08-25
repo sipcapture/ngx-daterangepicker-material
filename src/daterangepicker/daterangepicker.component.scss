@@ -219,14 +219,12 @@ $md-drppicker-cell-border-size: 1px !default;
         }
     }
 
-    // disabled controls
-    td,
-    option {
-        &.disabled {
-            color: #999;
-            cursor: not-allowed;
-            text-decoration: line-through;
-        }
+    &.in-range:hover{
+      border-radius: 0;
+    }
+    &.start-date {
+      border-radius: 2em 0 0 2em;
+
     }
 
     .navigation-button {
@@ -329,6 +327,7 @@ $md-drppicker-cell-border-size: 1px !default;
     .calendar-time select.disabled {
         color: #ccc;
         cursor: not-allowed;
+
     }
 
     .md-drppicker_input {

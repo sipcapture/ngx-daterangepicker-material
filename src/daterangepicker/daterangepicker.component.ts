@@ -60,18 +60,12 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
     constructor(private el: ElementRef, private _ref: ChangeDetectorRef, private _localeService: LocaleService) {}
     private _old: { start: any; end: any } = { start: null, end: null };
     chosenLabel: string;
-    calendarVariables: { left: any; right: any } = { left: {}, right: {} };
-    tooltiptext = []; // for storing tooltiptext
-    timepickerVariables: { left: any; right: any } = { left: {}, right: {} };
+    calendarVariables: {left: any, right: any} = {left: {}, right: {}};
+    timepickerVariables: {left: any, right: any} = {left: {}, right: {}};
     timepickerTimezone = moment.tz.guess(true);
-    timepickerListZones = moment.tz.names();
-    daterangepicker: { start: FormControl; end: FormControl } = { start: new FormControl(), end: new FormControl() };
-    fromMonthControl = new FormControl();
-    fromYearControl = new FormControl();
-    toMonthControl = new FormControl();
-    toYearControl = new FormControl();
-
-    applyBtn: { disabled: boolean } = { disabled: false };
+    timepickerListZones = moment.tz.names();    
+    daterangepicker: {start: FormControl, end: FormControl} = {start: new FormControl(), end: new FormControl()};
+    applyBtn: {disabled: boolean} = {disabled: false};
     @Input()
     startDate = moment().startOf('day');
     @Input()
@@ -204,7 +198,7 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
         this.toYearControl.valueChanges.pipe(takeUntil(this.destroy$)).subscribe((year) => {
             this.yearChanged(year, SideEnum.right);
         });
-
+      
         this._buildLocale();
         const daysOfWeek = [...this.locale.daysOfWeek];
         this.locale.firstDay = this.locale.firstDay % 7;
@@ -231,11 +225,12 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
             this.setEndDate(this.endDate);
             this.renderTimePicker(SideEnum.right);
         }
-
+        
         this.updateMonthsInView();
         this.renderCalendar(SideEnum.left);
         this.renderCalendar(SideEnum.right);
-        this.renderRanges();
+        this.renderRanges();        
+        
     }
 
     ngOnDestroy(): void {
@@ -333,6 +328,7 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
         this.timepickerVariables[side].selectedHour   = selected.hour();
         this.timepickerVariables[side].selectedMinute = selected.minute();
         this.timepickerVariables[side].selectedSecond = selected.second();
+
         // generate AM/PM
         if (!this.timePicker24Hour) {
             if (minDate && selected.clone().hour(12).minute(0).second(0).isBefore(minDate)) {
@@ -765,8 +761,28 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
      */
     timeChanged(side: SideEnum): void {
         let hour = parseInt(this.timepickerVariables[side].selectedHour, 10);
-        const minute = parseInt(this.timepickerVariables[side].selectedMinute, 10);
-        const second = this.timePickerSeconds ? parseInt(this.timepickerVariables[side].selectedSecond, 10) : 0;
+        let minute = parseInt(this.timepickerVariables[side].selectedMinute, 10);
+        let second = this.timePickerSeconds ? parseInt(this.timepickerVariables[side].selectedSecond, 10) : 0;
+        
+        //let hour = this.timepickerVariables[side].selectedHour;
+        //const minute = this.timepickerVariables[side].selectedMinute;
+        //const second = this.timePickerSeconds ? this.timepickerVariables[side].selectedSecond : 0;
+        if(hour < 10) this.timepickerVariables[side].selectedHour = '0' + this.timepickerVariables[side].selectedHour;
+        else this.timepickerVariables[side].selectedHour = '0';
+        if(minute < 10) this.timepickerVariables[side].selectedMinute = '0' + this.timepickerVariables[side].selectedMinute;
+        else this.timepickerVariables[side].selectedMinute = minute;
+        if(second < 10) this.timepickerVariables[side].selectedSecond = '0' + this.timepickerVariables[side].selectedSecond;
+        else this.timepickerVariables[side].selectedSecond = second;
+        
+        /*
+        console.log("side1", side);
+        console.log("event1", timeEvent);
+        console.log("hour", hour);
+        console.log("minute", minute);
+        console.log("1this.timepickerVariables[side].selectedHour", this.timepickerVariables[side].selectedHour);
+        console.log("1this.timepickerVariables[side].selectedMinute", this.timepickerVariables[side].selectedMinute);
+        console.log("2this.timepickerVariables[side].selectedSecond", this.timepickerVariables[side].selectedSecond);       
+        */
 
         if (!this.timePicker24Hour) {
             const ampm = this.timepickerVariables[side].ampmModel;
@@ -834,6 +850,29 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
       if (this.autoApply) {
         this.clickApply();
       }
+    }
+    /**
+     * called when timeZone is changed
+     * @param timeEvent  an event
+     */
+    timeZoneChanged(timeEvent: any) {
+        
+        /* changed moment to new timezone */
+        moment.tz.setDefault(this.timepickerTimezone);
+        
+        // update the calendars so all clickable dates reflect the new time component
+        this.updateCalendars();
+
+        // update the all ememnets
+       this.updateElement();
+
+        // re-render the time pickers because changing one selection can affect what's enabled in another
+        this.renderTimePicker(SideEnum.left);
+        this.renderTimePicker(SideEnum.right);
+
+        if (this.autoApply) {
+          this.clickApply();
+        }
     }
     /**
      *  call when month or year changed
@@ -1367,4 +1406,5 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
 
         return days.some((d) => this.isInvalidDate(d));
     }
+
 }

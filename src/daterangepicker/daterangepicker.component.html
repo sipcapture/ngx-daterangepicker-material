@@ -159,6 +159,7 @@
             </div>
             <div class="input">
                 <input (keypress)="checkTime($event, timepickerVariables.left.selectedSecond)" type="number"  maxLength="2" *ngIf="timePickerSeconds" class="input-item secondselect" [disabled]="!endDate" [ngModel]="timepickerVariables.left.selectedSecond | time" (ngModelChange)="timepickerVariables.left.selectedSecond = $event;timeChanged(sideEnum.left)">
+
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div>

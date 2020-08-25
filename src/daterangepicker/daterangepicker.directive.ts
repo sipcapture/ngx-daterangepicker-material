@@ -17,9 +17,7 @@ import {
 } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import * as _moment from 'moment-timezone';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { DaterangepickerComponent } from './daterangepicker.component';
+
 import { LocaleConfig } from './daterangepicker.config';
 import { LocaleService } from './locale.service';
 
@@ -42,6 +40,7 @@ const moment = _moment;
         },
     ],
 })
+
 export class DaterangepickerDirective implements OnInit, OnChanges, OnDestroy {
     private _onChange = Function.prototype;
     private _onTouched = Function.prototype;
