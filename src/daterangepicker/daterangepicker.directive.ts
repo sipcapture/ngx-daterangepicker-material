@@ -20,6 +20,7 @@ import * as _moment from 'moment-timezone';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { DaterangepickerComponent } from './daterangepicker.component';
+
 import { LocaleConfig } from './daterangepicker.config';
 import { LocaleService } from './locale.service';
 
@@ -115,6 +116,7 @@ export class DaterangepickerDirective implements OnInit, OnChanges, OnDestroy {
     _locale: LocaleConfig = {};
     @Input() set locale(value) {
         this._locale = { ...this._localeService.config, ...value };
+
     }
     get locale(): any {
         return this._locale;

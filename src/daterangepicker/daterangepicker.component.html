@@ -159,10 +159,12 @@
             </div>
             <div class="input">
                 <input (keypress)="checkTime($event, timepickerVariables.left.selectedSecond)" type="number"  maxLength="2" *ngIf="timePickerSeconds" class="input-item secondselect" [disabled]="!endDate" [ngModel]="timepickerVariables.left.selectedSecond | time" (ngModelChange)="timepickerVariables.left.selectedSecond = $event;timeChanged(sideEnum.left)">
+
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div>
         </div>
+
         <div class="calendar-time" *ngIf="timePicker"> <!-- end-time with input -->
           <span class='time-label'>To:</span>
           <div class="input">
@@ -195,6 +197,7 @@
           <span class="select-highlight"></span>
           <span class="select-bar"></span>
       </div>
+
     </div>
     <div class="buttons" *ngIf="!autoApply && (!rangesArray.length || (showCalInRanges && !singleDatePicker))">
         <div class="buttons_input">

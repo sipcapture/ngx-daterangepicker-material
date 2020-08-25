@@ -51,6 +51,7 @@
     "@angular/common": ">=9.0.0",
     "@angular/core": ">=9.0.0",
     "@angular/material": ">=9.0.0"
+
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.901.0",
@@ -84,6 +85,7 @@
     "ngx-highlightjs": "^4.1.0-beta",
     "node-sass": "^4.13.1",
     "prettier": "^2.0.2",
+
     "protractor": "~5.4.0",
     "rxjs": "^6.5.5",
     "scss-bundle": "^3.1.1",

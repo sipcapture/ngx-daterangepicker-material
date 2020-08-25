@@ -227,6 +227,7 @@ $md-drppicker-cell-border-size: 1px !default;
             cursor: not-allowed;
             text-decoration: line-through;
         }
+
     }
 
     .navigation-button {
@@ -329,6 +330,7 @@ $md-drppicker-cell-border-size: 1px !default;
     .calendar-time select.disabled {
         color: #ccc;
         cursor: not-allowed;
+
     }
 
     .md-drppicker_input {
@@ -515,10 +517,12 @@ $md-drppicker-cell-border-size: 1px !default;
         }
     }
 }
+
 input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
+
 }
 @media (min-width: 730px) {
     .md-drppicker {
