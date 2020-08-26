@@ -1,26 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import * as moment from 'moment';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+
+const reactiveFormMultiSelectExample = require('!!raw-loader!../examples/reactive-form-multi-select-example.component.ts').default;
+const reactiveFormSingleSelectExample = require('!!raw-loader!../examples/reactive-form-single-select-example.component.ts').default;
 
 @Component({
-  selector: 'reactive-form',
-  templateUrl: './reactive-form.component.html',
-  styleUrls: ['./reactive-form.component.scss']
+    selector: 'reactive-form',
+    templateUrl: './reactive-form.component.html',
+    styleUrls: ['./reactive-form.component.scss'],
 })
-export class ReactiveFormComponent implements OnInit {
-  form: FormGroup;
-  constructor(private fb: FormBuilder) {
-    this.form = this.fb.group({
-      selected: [{
-        startDate: moment('2015-11-24T00:00Z'),
-        endDate: moment('2015-11-26T00:00Z')
-      }, Validators.required],
-    });
-   }
-
-  ngOnInit() {
-  }
-  submit() {
-    console.log(this.form.value)
-  }
+export class ReactiveFormComponent {
+    reactiveFormMultiSelectExample = reactiveFormMultiSelectExample;
+    reactiveFormSingleSelectExample = reactiveFormSingleSelectExample;
 }

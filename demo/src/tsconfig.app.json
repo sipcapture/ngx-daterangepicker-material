@@ -1,13 +1,11 @@
 {
-  "extends": "../../tsconfig.app.json",
-  "compilerOptions": {
-    "outDir": "../out-tsc/app",
-    "baseUrl": "./",
-    "module": "es2015",
-    "types": []
-  },
-  "exclude": [
-    "test.ts",
-    "**/*.spec.ts"
-  ]
+    "extends": "../../tsconfig.app.json",
+    "compilerOptions": {
+        "experimentalDecorators": true,
+        "outDir": "../out-tsc/app",
+        "baseUrl": "./",
+        "types": ["node"]
+    },
+    "files": ["main.ts", "polyfills.ts"],
+    "include": ["demo/src/**/*.d.ts"]
 }
