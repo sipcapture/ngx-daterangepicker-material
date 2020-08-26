@@ -1,0 +1,47 @@
+{
+  "name": "ngx-daterangepicker-material",
+  "version": "3.0.4",
+  "description": "Angular 2+ date range picker (with material design theme)",
+  "keywords": [
+    "angular2",
+    "angular4",
+    "angular5",
+    "angular6",
+    "ng2",
+    "daterangepicker",
+    "material",
+    "component",
+    "directive",
+    "daterange",
+    "date",
+    "moment",
+    "picker"
+  ],
+  "homepage": "https://github.com/fetrarij/ngx-daterangepicker-material",
+  "license": "MIT",
+  "main": "bundles/ngx-daterangepicker-material.umd.js",
+  "typings": "ngx-daterangepicker-material.d.ts",
+  "schematics": "./schematics/collection.json",
+  "author": "Fetrarijaona R.",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/fetrarij/ngx-daterangepicker-material.git"
+  },
+  "peerDependencies": {
+    "moment-timezone": "^0.5.31",
+    "@angular/common": ">=9.0.0",
+    "@angular/core": ">=9.0.0",
+    "@angular/material": ">=9.0.0",
+    "tslib": "^1.10.0"
+  },
+  "$schema": "./node_modules/ng-packagr/package.schema.json",
+  "dependencies": {},
+  "module": "fesm5/ngx-daterangepicker-material.js",
+  "es2015": "fesm2015/ngx-daterangepicker-material.js",
+  "esm5": "esm5/ngx-daterangepicker-material.js",
+  "esm2015": "esm2015/ngx-daterangepicker-material.js",
+  "fesm5": "fesm5/ngx-daterangepicker-material.js",
+  "fesm2015": "fesm2015/ngx-daterangepicker-material.js",
+  "metadata": "ngx-daterangepicker-material.metadata.json",
+  "sideEffects": false
+}
