@@ -424,6 +424,9 @@ $md-drppicker-cell-border-size: 1px !default;
                         border-right: none;
                         border-top-right-radius: 0;
                         border-bottom-right-radius: 0;
+                        mat-select {
+                          width: 100%;
+                        }
                     }
                 }
 

@@ -12,7 +12,7 @@
     }"
 >
   <mat-tab-group dynamicHeight>
-    <mat-tab class="tab" label="Ranges" *ngIf='ranges !== undefined'>
+    <mat-tab class="tab" label="Relative" *ngIf='ranges !== undefined'>
       <div *ngIf="rangesArray.length > 0" class="ranges">
           <ul>
               <li *ngFor="let range of rangesArray">
@@ -28,7 +28,7 @@
           </ul>
       </div>
     </mat-tab>
-    <mat-tab class="tab" label="Calendar">
+    <mat-tab class="tab" label="Absolute">
       <div class="calendar" [ngClass]="{ right: singleDatePicker, left: !singleDatePicker }" *ngIf="showCalInRanges">
           <div class="calendar-table">
               <table class="table-condensed" *ngIf="calendarVariables">
@@ -93,7 +93,7 @@
                               *ngIf="
                                   (!calendarVariables.left.maxDate ||
                                       calendarVariables.left.maxDate.isAfter(calendarVariables.left.calendar.lastDay)) &&
-                                  (!linkedCalendars || singleDatePicker)
+                                  (!linkedCalendars || !singleDatePicker)
                               "
                           >
                               <th>
@@ -163,6 +163,9 @@
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div>
+            <button mat-button (click)='setToNow("start")'>
+              @Now
+            </button>
         </div>
 
         <div class="calendar-time" *ngIf="timePicker"> <!-- end-time with input -->
@@ -182,21 +185,27 @@
               <span class="select-highlight"></span>
               <span class="select-bar"></span>
           </div>
+          <button mat-button (click)='setToNow("end")'>
+            @Now
+          </button>
         </div>
       </div>
     </mat-tab>
   </mat-tab-group>
     <div class="calendar-table" *ngIf="timeZone">
-      <div class="select">
-          <h3>Displayed timezone select</h3>
-          <mat-select class="select-item hourselect" [disabled]="!endDate" [(ngModel)]="timepickerTimezone" (ngModelChange)="timeZoneChanged($event)">
-              <mat-option *ngFor="let i of timepickerListZones"
-              [value]="i"
-              [disabled]="timepickerVariables.right.disabledHours.indexOf(i) > -1">{{i}}</mat-option>
+      <mat-form-field appearance="fill" style="display:block;width:100%;">
+          <mat-label>Displayed timezone select</mat-label>
+          <mat-select class="select-item" [disabled]="!endDate" [(ngModel)]="timepickerTimezone" (ngModelChange)="timeZoneChanged($event)">
+              <mat-optgroup *ngFor='let region of parsedTimeZones | keyvalue' [label]='region.key'>
+              <mat-option *ngFor='let timeZone of region.value' [value]="timeZone">
+                  {{timeZone | timeZone:'location'}} {{timeZone | timeZone:'offset'}}
+              </mat-option>
+              </mat-optgroup>
           </mat-select>
           <span class="select-highlight"></span>
           <span class="select-bar"></span>
-      </div>
+        </mat-form-field>
+
 
     </div>
     <div class="buttons" *ngIf="!autoApply && (!rangesArray.length || (showCalInRanges && !singleDatePicker))">
