@@ -458,6 +458,8 @@ Orginal Style from https://github.com/Kelbster/highlightjs-material-dark-theme  
           border-right: none;
           border-top-right-radius: 0;
           border-bottom-right-radius: 0; }
+          .md-drppicker.ltr .calendar.left .calendar-table mat-select {
+            width: 100%; }
       .md-drppicker.ltr .calendar.right {
         margin-left: 0; }
         .md-drppicker.ltr .calendar.right .calendar-table {

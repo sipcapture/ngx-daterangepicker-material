@@ -38,9 +38,11 @@ export declare class DaterangepickerComponent implements OnInit, OnDestroy {
     fromYearControl: FormControl;
     toMonthControl: FormControl;
     toYearControl: FormControl;
+    parsedTimeZones: any;
     applyBtn: {
         disabled: boolean;
     };
+    sortValue: string;
     startDate: _moment.Moment;
     endDate: _moment.Moment;
     dateLimit: number;
@@ -120,6 +122,8 @@ export declare class DaterangepickerComponent implements OnInit, OnDestroy {
     ngOnInit(): void;
     ngOnDestroy(): void;
     renderRanges(): void;
+    groupTimeZones(): void;
+    setToNow(time: any): void;
     renderTimePicker(side: SideEnum): void;
     renderCalendar(side: SideEnum): void;
     setStartDate(startDate: any): void;
