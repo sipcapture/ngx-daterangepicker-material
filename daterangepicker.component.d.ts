@@ -43,6 +43,7 @@ export declare class DaterangepickerComponent implements OnInit, OnDestroy {
         disabled: boolean;
     };
     sortValue: string;
+    _timeout: any;
     startDate: _moment.Moment;
     endDate: _moment.Moment;
     dateLimit: number;
@@ -124,6 +125,7 @@ export declare class DaterangepickerComponent implements OnInit, OnDestroy {
     renderRanges(): void;
     groupTimeZones(): void;
     setToNow(time: any): void;
+    scrollUpdate(event: any, type: any, link: any, side: any): void;
     renderTimePicker(side: SideEnum): void;
     renderCalendar(side: SideEnum): void;
     setStartDate(startDate: any): void;
@@ -157,7 +159,7 @@ export declare class DaterangepickerComponent implements OnInit, OnDestroy {
      * called when time is changed
      * @param side left or right
      */
-    timeChanged(side: SideEnum): void;
+    timeChanged(side: SideEnum, event?: any): void;
     /**
      * called when timeZone is changed
      * @param timeEvent  an event
@@ -239,6 +241,7 @@ export declare class DaterangepickerComponent implements OnInit, OnDestroy {
      */
     hasCurrentMonthDays(currentMonth: any, row: any): boolean;
     checkTime(event: any, value: any): boolean;
+    preventInput(event: any, type: any): void;
     /**
      * Returns true when a date within the range of dates is invalid
      */
