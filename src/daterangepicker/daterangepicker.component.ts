@@ -17,6 +17,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { LocaleConfig } from './daterangepicker.config';
 import { LocaleService } from './locale.service';
+import { time } from 'console';
 
 const moment = _moment;
 
@@ -74,6 +75,7 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
     parsedTimeZones: any;
     applyBtn: { disabled: boolean } = { disabled: false };
     sortValue: string;
+    _timeout: any;
     @Input()
     startDate = moment().startOf('day');
     @Input()
@@ -326,18 +328,45 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
     }
     setToNow(time) {
         if (time === 'start') {
-           this.timepickerVariables.left.selectedHour = this.timePicker24Hour ? moment().format('h') : moment().format('H');
-           this.timepickerVariables.left.selectedMinute = moment().format('m');
-           this.timepickerVariables.left.selectedSecond = moment().format('s');
+           this.timepickerVariables.left.selectedHour = this.timePicker24Hour ? moment().format('hh') : moment().format('HH');
+           this.timepickerVariables.left.selectedMinute = moment().format('mm');
+           this.timepickerVariables.left.selectedSecond = moment().format('ss');
            this.setStartDate(this._getDateWithTime(moment(), this.sideEnum.left));
         } else if (time === 'end') {
-            this.timepickerVariables.left.selectedHour = this.timePicker24Hour ? moment().format('h') : moment().format('H');
-            this.timepickerVariables.left.selectedMinute = moment().format('m');
-            this.timepickerVariables.left.selectedSecond = moment().format('s');
+            this.timepickerVariables.right.selectedHour = this.timePicker24Hour ? moment().format('hh') : moment().format('HH');
+            this.timepickerVariables.right.selectedMinute = moment().format('mm');
+            this.timepickerVariables.right.selectedSecond = moment().format('ss');
         this.setEndDate(this._getDateWithTime(moment(), this.sideEnum.left));
         }
-        this.updateMonthsInView();
         this.updateCalendars();
+        this.updateMonthsInView();
+    }
+    scrollUpdate(event,type,link,side) {
+      console.log(link)
+      let value = parseInt(event.srcElement.value, 10);
+      if (type === 'hh' && this.timePicker24Hour) {
+        type = 'HH';
+      }
+      if (event.deltaY > 0) {
+        if (value !== 0){
+          value -= 1;
+        } else if (type === 'hh') {
+          value = 12;
+        } else if ( type === 'HH') {
+          value = 23;
+        } else {
+          value = 59;
+        }
+      } else if (event.deltaY < 0) {
+        if ((type === 'hh' && value === 12) || (type === 'HH' && value === 23) || (value === 59)) {
+          value = 0;
+        } else {
+          value += 1;
+        }
+      }
+      event.srcElement.value = moment(value, type).format(type);
+      this.timepickerVariables[side][link] = moment(value, type).format(type);
+      this.timeChanged(side);
     }
     renderTimePicker(side: SideEnum) {
         let selected, minDate;
@@ -369,9 +398,10 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
             selectedMinute: 0,
             selectedSecond: 0,
         };
-        this.timepickerVariables[side].selectedHour   = selected.hour();
-        this.timepickerVariables[side].selectedMinute = selected.minute();
-        this.timepickerVariables[side].selectedSecond = selected.second();
+        this.timepickerVariables[side].selectedHour   = moment(selected.hour(), this.timePicker24Hour ? 'H' : 'h').format( this.timePicker24Hour ? 'HH' : 'hh');
+        this.timepickerVariables[side].selectedMinute = moment(selected.minute(), 'm').format('mm');
+        this.timepickerVariables[side].selectedSecond = moment(selected.second(), 's').format('ss');
+
 
         // generate AM/PM
         if (!this.timePicker24Hour) {
@@ -747,7 +777,6 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
 
             this.calculateChosenLabel();
         }
-
         if (this.isInvalidDate && this.startDate && this.endDate) {
             // get if there are invalid date between range
             const d = this.startDate.clone();
@@ -804,12 +833,11 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
      * called when time is changed
      * @param side left or right
      */
-    timeChanged(side: SideEnum): void {
+    timeChanged(side: SideEnum,event?): void {
         let hour = parseInt(this.timepickerVariables[side].selectedHour, 10);
         const minute = parseInt(this.timepickerVariables[side].selectedMinute, 10);
         const second = this.timePickerSeconds ? parseInt(this.timepickerVariables[side].selectedSecond, 10) : 0;
-
-
+        console.log(hour, minute, second)
         if (!this.timePicker24Hour) {
             const ampm = this.timepickerVariables[side].ampmModel;
             if (ampm === 'PM' && hour < 12) {
@@ -1382,20 +1410,43 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
 
     checkTime(event: any, value): boolean {
         const charCode = (event.which) ? event.which : event.keyCode;
-        if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 46 ) {
+         if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode !== 46 ) {
             return false;
         }
         const target = event.srcElement || event.target;
         const maxLength = parseInt(target.attributes['maxLength'].value, 10);
         const myLength = target.value.length;
+        if (target.value > 60){
+          setTimeout(() => {
+            target.value = 0;
+          }, 50);
+
+        }
         if (myLength === maxLength) {
-            target.value = target.value.slice(1);
+            value = value.toString().slice(1);
         }
         if (myLength > maxLength) {
             return false;
         }
 
         return true;
+    }
+    preventInput(event, type){
+      if (this._timeout) {
+        clearTimeout(this._timeout);
+      }
+      if (type === 'hh' && this.timePicker24Hour) {
+        type = 'HH';
+      }
+      this._timeout = setTimeout(() => {
+          if (moment(event.srcElement.value,type).isValid()){
+            console.log('valid',event.srcElement.value)
+              event.srcElement.value = moment(event.srcElement.value,type).format(type);
+          } else {
+            console.log('invalid',event.srcElement.value)
+            event.srcElement.value = moment(0, type).format(type);
+          }
+      }, 500);
     }
 
     /**
