@@ -148,18 +148,17 @@
         <div class="calendar-time" *ngIf="timePicker"> <!-- start-time with input -->
           <span class='time-label'>From:</span>
             <div class="input">
-                <input (keypress)="checkTime($event, timepickerVariables.left.selectedHour)" type="number" maxLength="2" class="input-item hourselect" [disabled]="!endDate" [ngModel]="timepickerVariables.left.selectedHour | time" (ngModelChange)="timepickerVariables.left.selectedHour = $event; timeChanged(sideEnum.left)">
+                <input matInput (wheel)="scrollUpdate($event,'hh', 'selectedHour',sideEnum.left)" (keyup)="preventInput($event, 'hh')" type="number" type="text" pattern="\d*" maxLength="2" class="input-item hourselect" [disabled]="!endDate" [ngModel]="timepickerVariables.left.selectedHour" (ngModelChange)="timepickerVariables.left.selectedHour = $event; timeChanged(sideEnum.left)">
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div>
             <div class="input">
-                <input (keypress)="checkTime($event, timepickerVariables.left.selectedMinute)" type="number" maxLength="2" class="input-item minuteselect" [disabled]="!endDate" [ngModel]="timepickerVariables.left.selectedMinute | time" (ngModelChange)="timepickerVariables.left.selectedMinute = $event;timeChanged(sideEnum.left)">
+                <input matInput (wheel)="scrollUpdate($event,'mm', 'selectedMinute',sideEnum.left)" (keyup)="preventInput($event, 'mm')" type="number" type="text" pattern="\d*" maxLength="2" class="input-item minuteselect" [disabled]="!endDate" [ngModel]="timepickerVariables.left.selectedMinute" (ngModelChange)="timepickerVariables.left.selectedMinute = $event;timeChanged(sideEnum.left)">
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div>
             <div class="input">
-                <input (keypress)="checkTime($event, timepickerVariables.left.selectedSecond)" type="number"  maxLength="2" *ngIf="timePickerSeconds" class="input-item secondselect" [disabled]="!endDate" [ngModel]="timepickerVariables.left.selectedSecond | time" (ngModelChange)="timepickerVariables.left.selectedSecond = $event;timeChanged(sideEnum.left)">
-
+                <input matInput (wheel)="scrollUpdate($event,'ss','selectedSecond',sideEnum.left)" (keyup)="preventInput($event, 'ss')" type="number"  type="text" pattern="\d*" maxLength="2" *ngIf="timePickerSeconds" class="input-item secondselect" [disabled]="!endDate" [ngModel]="timepickerVariables.left.selectedSecond" (ngModelChange)="timepickerVariables.left.selectedSecond = $event;timeChanged(sideEnum.left)">
                 <span class="select-highlight"></span>
                 <span class="select-bar"></span>
             </div>
@@ -171,17 +170,17 @@
         <div class="calendar-time" *ngIf="timePicker"> <!-- end-time with input -->
           <span class='time-label'>To:</span>
           <div class="input">
-              <input (keypress)="checkTime($event, timepickerVariables.right.selectedHour)" type="number"  maxLength="2" class="input-item hourselect" [disabled]="!endDate" [ngModel]="timepickerVariables.right.selectedHour | time" (ngModelChange)="timepickerVariables.right.selectedHour = $event;timeChanged(sideEnum.right)">
+              <input matInput (wheel)="scrollUpdate($event,'hh','selectedHour', sideEnum.right)" (keyup)="preventInput($event, 'hh')" type="number"  type="text" pattern="\d*" maxLength="2" class="input-item hourselect" [disabled]="!endDate" [ngModel]="timepickerVariables.right.selectedHour" (ngModelChange)="timepickerVariables.right.selectedHour = $event;timeChanged(sideEnum.right, $event)">
               <span class="select-highlight"></span>
               <span class="select-bar"></span>
           </div>
           <div class="input">
-              <input (keypress)="checkTime($event, timepickerVariables.right.selectedMinute)" type="number"  maxLength="2" class="input-item minuteselect" [disabled]="!endDate" [ngModel]="timepickerVariables.right.selectedMinute | time" (ngModelChange)="timepickerVariables.right.selectedMinute = $event;timeChanged(sideEnum.right)">
+              <input matInput (wheel)="scrollUpdate($event,'mm','selectedMinute', sideEnum.right)" (keyup)="preventInput($event, 'mm')"  type="number"  type="text" pattern="\d*" maxLength="2" class="input-item minuteselect" [disabled]="!endDate" [(ngModel)]="timepickerVariables.right.selectedMinute" (ngModelChange)="timeChanged(sideEnum.right, $event)">
               <span class="select-highlight"></span>
               <span class="select-bar"></span>
           </div>
           <div class="input">
-              <input (keypress)="checkTime($event, timepickerVariables.right.selectedSecond)" type="number"  maxLength="2" *ngIf="timePickerSeconds" class="input-item secondselect" [disabled]="!endDate" [ngModel]="timepickerVariables.right.selectedSecond | time" (ngModelChange)="timepickerVariables.right.selectedSecond = $event;timeChanged(sideEnum.right)">
+              <input matInput (wheel)="scrollUpdate($event,'ss','selectedSecond', sideEnum.right)" (keyup)="preventInput($event, 'ss')" type="number"  type="text" pattern="\d*" maxLength="2" *ngIf="timePickerSeconds" class="input-item secondselect" [disabled]="!endDate" [ngModel]="timepickerVariables.right.selectedSecond" (ngModelChange)="timepickerVariables.right.selectedSecond = $event;timeChanged(sideEnum.right, $event)">
               <span class="select-highlight"></span>
               <span class="select-bar"></span>
           </div>
