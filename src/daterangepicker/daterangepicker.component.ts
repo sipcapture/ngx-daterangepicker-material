@@ -33,10 +33,12 @@ export class DaterangepickerComponent implements OnInit {
     chosenLabel: string;
     calendarVariables: {left: any, right: any} = {left: {}, right: {}};
     timepickerVariables: {left: any, right: any} = {left: {}, right: {}};
-    timepickerTimezone = moment.tz.guess(true);
     timepickerListZones = moment.tz.names();    
     daterangepicker: {start: FormControl, end: FormControl} = {start: new FormControl(), end: new FormControl()};
     applyBtn: {disabled: boolean} = {disabled: false};
+    
+    @Input()
+    timepickerTimezone = moment.tz.guess(true); 
     @Input()
     startDate = moment().startOf('day');
     @Input()
