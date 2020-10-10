@@ -305,9 +305,6 @@
                     this.startDate = this.startDate.startOf('day');
                     this.endDate = this.endDate.endOf('day');
                 }*/
-                console.log("RENDER start ", this.startDate);
-                console.log("RENDER end ", this.endDate);
-                console.log("RENDER XXXXX ", this.timepickerTimezone);
             }
         };
         DaterangepickerComponent.prototype.renderTimePicker = function (side) {
