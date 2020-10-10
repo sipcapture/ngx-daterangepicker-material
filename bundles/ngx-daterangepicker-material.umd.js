@@ -206,16 +206,19 @@
             console.log("JOPA1 ", this.startDate);
             console.log("JOPA2 ", this.endDate);
             console.log("XXXXX ", this.timepickerTimezone);
+            if (!this.timepickerTimezone) {
+                this.timepickerTimezone = moment$1.tz.guess(true);
+            }
+            moment$1.tz.setDefault(this.timepickerTimezone);
             if (!this.startDate) {
                 this.startDate = moment$1().startOf('day');
             }
             if (!this.endDate) {
                 this.endDate = moment$1().endOf('day');
             }
-            if (!this.timepickerTimezone) {
-                this.timepickerTimezone = moment$1.tz.guess(true);
-            }
-            moment$1.tz.setDefault(this.timepickerTimezone);
+            console.log("A JOPA1 ", this.startDate);
+            console.log("A JOPA2 ", this.endDate);
+            console.log("A XXXXX ", this.timepickerTimezone);
             this._buildLocale();
             var daysOfWeek = __spread(this.locale.daysOfWeek);
             if (this.locale.firstDay !== 0) {
