@@ -154,6 +154,7 @@ var DaterangepickerComponent = /** @class */ (function () {
         console.log("A JOPA1 ", this.startDate);
         console.log("A JOPA2 ", this.endDate);
         console.log("A XXXXX ", this.timepickerTimezone);
+        console.log("A TITLE ", this.titleDate);
         this._buildLocale();
         var daysOfWeek = __spread(this.locale.daysOfWeek);
         if (this.locale.firstDay !== 0) {

@@ -141,6 +141,7 @@ let DaterangepickerComponent = DaterangepickerComponent_1 = class Daterangepicke
         console.log("A JOPA1 ", this.startDate);
         console.log("A JOPA2 ", this.endDate);
         console.log("A XXXXX ", this.timepickerTimezone);
+        console.log("A TITLE ", this.titleDate);
         this._buildLocale();
         const daysOfWeek = [...this.locale.daysOfWeek];
         if (this.locale.firstDay !== 0) {
