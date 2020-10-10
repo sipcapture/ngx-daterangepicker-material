@@ -127,6 +127,15 @@ let DaterangepickerComponent = DaterangepickerComponent_1 = class Daterangepicke
     }
     ngOnInit() {
         /* changed moment to new timezone */
+        if (!this.startDate) {
+            this.startDate = moment$1().startOf('day');
+        }
+        if (!this.endDate) {
+            this.endDate = moment$1().endOf('day');
+        }
+        if (!this.timepickerTimezone) {
+            this.timepickerTimezone = moment$1.tz.guess(true);
+        }
         moment$1.tz.setDefault(this.timepickerTimezone);
         this._buildLocale();
         const daysOfWeek = [...this.locale.daysOfWeek];
