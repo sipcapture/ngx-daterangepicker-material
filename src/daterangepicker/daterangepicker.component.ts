@@ -1139,8 +1139,8 @@ export class DaterangepickerComponent implements OnInit {
     clear() {
         this.startDate = moment().startOf('day');
         this.endDate = moment().endOf('day');
-        this.choosedDate.emit({ chosenLabel: '', startDate: null, endDate: null });
-        this.datesUpdated.emit({ startDate: null, endDate: null });
+        this.choosedDate.emit({ chosenLabel: '', startDate: null, endDate: null, timezone: '' });
+        this.datesUpdated.emit({ startDate: null, endDate: null, timezone: '' });
         this.hide();
     }
 
