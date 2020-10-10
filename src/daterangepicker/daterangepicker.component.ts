@@ -40,9 +40,9 @@ export class DaterangepickerComponent implements OnInit {
     @Input()
     timepickerTimezone: string = null;
     @Input()
-    startDate:  _moment.Moment = null;
+    startDate: _moment.Moment = null;
     @Input()
-    endDate:  _moment.Moment = null;
+    endDate: _moment.Moment = null;
     @Input()
     dateLimit: number = null;
     // used in template for compile time support of enum values.
@@ -161,7 +161,21 @@ export class DaterangepickerComponent implements OnInit {
     ngOnInit() {
 
         /* changed moment to new timezone */
+
+        if (!this.startDate) {
+            this.startDate = moment().startOf('day');
+        }
+
+        if (!this.endDate) {
+            this.endDate = moment().endOf('day');
+        }
+
+        if (!this.timepickerTimezone) {
+            this.timepickerTimezone = moment.tz.guess(true);
+        }
+
         moment.tz.setDefault(this.timepickerTimezone);
+
 
         this._buildLocale();
         const daysOfWeek = [...this.locale.daysOfWeek];
