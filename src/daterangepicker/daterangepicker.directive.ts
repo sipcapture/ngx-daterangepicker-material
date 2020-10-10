@@ -47,9 +47,15 @@ export class DaterangepickerDirective implements OnInit, OnChanges, DoCheck {
   private _value: any;
   private localeDiffer: KeyValueDiffer<string, any>;
   @Input()
-  minDate: _moment.Moment
+  timepickerTimezone: string;
   @Input()
-  maxDate: _moment.Moment
+  startDate: _moment.Moment;
+  @Input()
+  endDate: _moment.Moment;
+  @Input()
+  minDate: _moment.Moment;
+  @Input()
+  maxDate: _moment.Moment;
   @Input()
   autoApply: boolean;
   @Input()
