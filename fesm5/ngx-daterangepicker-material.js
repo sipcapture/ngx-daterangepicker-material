@@ -62,9 +62,9 @@ var DaterangepickerComponent = /** @class */ (function () {
         this.timepickerListZones = moment$1.tz.names();
         this.daterangepicker = { start: new FormControl(), end: new FormControl() };
         this.applyBtn = { disabled: false };
-        this.timepickerTimezone = moment$1.tz.guess(true);
-        this.startDate = moment$1().startOf('day');
-        this.endDate = moment$1().endOf('day');
+        this.timepickerTimezone = null;
+        this.startDate = null;
+        this.endDate = null;
         this.dateLimit = null;
         // used in template for compile time support of enum values.
         this.sideEnum = SideEnum;
@@ -1237,7 +1237,7 @@ var DaterangepickerComponent = /** @class */ (function () {
     var DaterangepickerComponent_1;
     __decorate([
         Input(),
-        __metadata("design:type", Object)
+        __metadata("design:type", String)
     ], DaterangepickerComponent.prototype, "timepickerTimezone", void 0);
     __decorate([
         Input(),
