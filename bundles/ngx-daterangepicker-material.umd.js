@@ -575,7 +575,6 @@
             }
             this.startDateChanged.emit({ startDate: this.startDate });
             this.updateMonthsInView();
-            console.log("JOPA RRR: ", this.startDate);
         };
         DaterangepickerComponent.prototype.setEndDate = function (endDate) {
             if (typeof endDate === 'string') {
@@ -603,7 +602,6 @@
             if (!this.isShown) ;
             this.endDateChanged.emit({ endDate: this.endDate });
             this.updateMonthsInView();
-            console.log("JOPA TTT: ", this.endDate);
         };
         DaterangepickerComponent.prototype.isInvalidDate = function (date) {
             return false;
@@ -809,15 +807,6 @@
                 this.timepickerVariables[side].selectedSecond = '0' + this.timepickerVariables[side].selectedSecond;
             else
                 this.timepickerVariables[side].selectedSecond = second;
-            /*
-            console.log("side1", side);
-            console.log("event1", timeEvent);
-            console.log("hour", hour);
-            console.log("minute", minute);
-            console.log("1this.timepickerVariables[side].selectedHour", this.timepickerVariables[side].selectedHour);
-            console.log("1this.timepickerVariables[side].selectedMinute", this.timepickerVariables[side].selectedMinute);
-            console.log("2this.timepickerVariables[side].selectedSecond", this.timepickerVariables[side].selectedSecond);
-            */
             if (!this.timePicker24Hour) {
                 var ampm = this.timepickerVariables[side].ampmModel;
                 if (ampm === 'PM' && hour < 12) {
