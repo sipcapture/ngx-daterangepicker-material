@@ -46,6 +46,7 @@ export class DaterangepickerDirective implements OnInit, OnChanges, DoCheck {
   private _validatorChange = Function.prototype;
   private _value: any;
   private localeDiffer: KeyValueDiffer<string, any>;
+  
   @Input()
   timepickerTimezone: string;
   @Input()

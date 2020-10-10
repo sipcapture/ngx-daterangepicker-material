@@ -38,17 +38,15 @@ export class DaterangepickerComponent implements OnInit {
     applyBtn: { disabled: boolean } = { disabled: false };
 
     @Input()
-    timepickerTimezone = moment.tz.guess(true);
+    timepickerTimezone: string = null;
     @Input()
-    startDate = moment().startOf('day');
+    startDate:  _moment.Moment = null;
     @Input()
-    endDate = moment().endOf('day');
-
+    endDate:  _moment.Moment = null;
     @Input()
     dateLimit: number = null;
     // used in template for compile time support of enum values.
     sideEnum = SideEnum;
-
     @Input()
     minDate: _moment.Moment = null;
     @Input()
