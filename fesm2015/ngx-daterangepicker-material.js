@@ -1041,8 +1041,8 @@ let DaterangepickerComponent = DaterangepickerComponent_1 = class Daterangepicke
     clear() {
         this.startDate = moment$1().startOf('day');
         this.endDate = moment$1().endOf('day');
-        this.choosedDate.emit({ chosenLabel: '', startDate: null, endDate: null });
-        this.datesUpdated.emit({ startDate: null, endDate: null });
+        this.choosedDate.emit({ chosenLabel: '', startDate: null, endDate: null, timezone: '' });
+        this.datesUpdated.emit({ startDate: null, endDate: null, timezone: '' });
         this.hide();
     }
     /**
@@ -1709,6 +1709,18 @@ let DaterangepickerDirective = DaterangepickerDirective_1 = class Daterangepicke
         }
     }
 };
+__decorate([
+    Input(),
+    __metadata("design:type", String)
+], DaterangepickerDirective.prototype, "timepickerTimezone", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", Object)
+], DaterangepickerDirective.prototype, "startDate", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", Object)
+], DaterangepickerDirective.prototype, "endDate", void 0);
 __decorate([
     Input(),
     __metadata("design:type", Object)
