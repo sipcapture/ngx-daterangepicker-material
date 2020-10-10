@@ -661,9 +661,9 @@ let DaterangepickerComponent = DaterangepickerComponent_1 = class Daterangepicke
             }
         }
         if (this.chosenLabel) {
-            this.choosedDate.emit({ chosenLabel: this.chosenLabel, startDate: this.startDate, endDate: this.endDate });
+            this.choosedDate.emit({ chosenLabel: this.chosenLabel, startDate: this.startDate, endDate: this.endDate, timezone: this.timepickerTimezone });
         }
-        this.datesUpdated.emit({ startDate: this.startDate, endDate: this.endDate });
+        this.datesUpdated.emit({ startDate: this.startDate, endDate: this.endDate, timezone: this.timepickerTimezone });
         if (e || (this.closeOnAutoApply && !e)) {
             this.hide();
         }
