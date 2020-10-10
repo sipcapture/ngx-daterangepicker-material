@@ -7,7 +7,6 @@
 /demo/dist-server
 /tmp
 /out-tsc
-/schematics/dist
 
 # dependencies
 /node_modules

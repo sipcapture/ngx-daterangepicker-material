@@ -15,10 +15,9 @@ export interface LocaleConfig {
     clearLabel?: string;
     customRangeLabel?: string;
     daysOfWeek?: string[];
-    monthNames?: string[];
+    monthNames?:  string[];
     firstDay?: number;
     format?: string;
-    displayFormat?: string;
 }
 /**
  *  DefaultLocaleConfig
@@ -33,5 +32,5 @@ export const DefaultLocaleConfig: LocaleConfig = {
     customRangeLabel: 'Custom range',
     daysOfWeek: moment.weekdaysMin(),
     monthNames: moment.monthsShort(),
-    firstDay: moment.localeData().firstDayOfWeek(),
+    firstDay: moment.localeData().firstDayOfWeek()
 };
