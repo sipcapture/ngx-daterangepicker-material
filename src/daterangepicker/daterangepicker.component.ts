@@ -76,6 +76,7 @@ export class DaterangepickerComponent implements OnInit, OnDestroy {
     applyBtn: { disabled: boolean } = { disabled: false };
     sortValue: string;
     _timeout: any;
+
     @Input()
     startDate = moment().startOf('day');
     @Input()
