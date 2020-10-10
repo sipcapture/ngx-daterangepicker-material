@@ -15,7 +15,8 @@ import {
   KeyValueDiffers,
   Output,
   EventEmitter,
-  Renderer2
+  Renderer2,
+  Inject
 } from '@angular/core';
 import { DaterangepickerComponent } from './daterangepicker.component';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
@@ -53,6 +54,8 @@ export class DaterangepickerDirective implements OnInit, OnChanges, DoCheck {
   startDate: _moment.Moment;
   @Input()
   endDate: _moment.Moment;
+  @Input()
+  titleDate: string;
   @Input()
   minDate: _moment.Moment;
   @Input()

@@ -44,6 +44,8 @@ export class DaterangepickerComponent implements OnInit {
     @Input()
     endDate: _moment.Moment = null;
     @Input()
+    titleDate: string = null;
+    @Input()
     dateLimit: number = null;
     // used in template for compile time support of enum values.
     sideEnum = SideEnum;
@@ -162,6 +164,12 @@ export class DaterangepickerComponent implements OnInit {
 
         /* changed moment to new timezone */
 
+        if (!this.timepickerTimezone) {
+            this.timepickerTimezone = moment.tz.guess(true);
+        }
+
+        moment.tz.setDefault(this.timepickerTimezone);
+
         if (!this.startDate) {
             this.startDate = moment().startOf('day');
         }
@@ -169,13 +177,6 @@ export class DaterangepickerComponent implements OnInit {
         if (!this.endDate) {
             this.endDate = moment().endOf('day');
         }
-
-        if (!this.timepickerTimezone) {
-            this.timepickerTimezone = moment.tz.guess(true);
-        }
-
-        moment.tz.setDefault(this.timepickerTimezone);
-
 
         this._buildLocale();
         const daysOfWeek = [...this.locale.daysOfWeek];
@@ -207,8 +208,8 @@ export class DaterangepickerComponent implements OnInit {
         this.renderCalendar(SideEnum.left);
         this.renderCalendar(SideEnum.right);
         this.renderRanges();
-
     }
+
     renderRanges() {
         this.rangesArray = [];
         let start, end;
@@ -259,10 +260,11 @@ export class DaterangepickerComponent implements OnInit {
                 this.rangesArray.push(this.locale.customRangeLabel);
             }
             this.showCalInRanges = (!this.rangesArray.length) || this.alwaysShowCalendars;
+            /*
             if (!this.timePicker) {
                 this.startDate = this.startDate.startOf('day');
                 this.endDate = this.endDate.endOf('day');
-            }
+            }*/
         }
 
     }
@@ -564,9 +566,12 @@ export class DaterangepickerComponent implements OnInit {
         }
         this.startDateChanged.emit({ startDate: this.startDate });
         this.updateMonthsInView();
+
+        console.log("JOPA RRR: ", this.startDate);
     }
 
     setEndDate(endDate) {
+
         if (typeof endDate === 'string') {
             this.endDate = moment(endDate, this.locale.format);
         }
@@ -602,6 +607,8 @@ export class DaterangepickerComponent implements OnInit {
         }
         this.endDateChanged.emit({ endDate: this.endDate });
         this.updateMonthsInView();
+
+        console.log("JOPA TTT: ", this.endDate);
     }
     @Input()
     isInvalidDate(date) {
