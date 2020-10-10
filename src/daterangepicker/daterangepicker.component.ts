@@ -567,7 +567,6 @@ export class DaterangepickerComponent implements OnInit {
         this.startDateChanged.emit({ startDate: this.startDate });
         this.updateMonthsInView();
 
-        console.log("JOPA RRR: ", this.startDate);
     }
 
     setEndDate(endDate) {
@@ -608,7 +607,6 @@ export class DaterangepickerComponent implements OnInit {
         this.endDateChanged.emit({ endDate: this.endDate });
         this.updateMonthsInView();
 
-        console.log("JOPA TTT: ", this.endDate);
     }
     @Input()
     isInvalidDate(date) {
@@ -814,16 +812,6 @@ export class DaterangepickerComponent implements OnInit {
         else this.timepickerVariables[side].selectedMinute = minute;
         if (second < 10) this.timepickerVariables[side].selectedSecond = '0' + this.timepickerVariables[side].selectedSecond;
         else this.timepickerVariables[side].selectedSecond = second;
-
-        /*
-        console.log("side1", side);
-        console.log("event1", timeEvent);
-        console.log("hour", hour);
-        console.log("minute", minute);
-        console.log("1this.timepickerVariables[side].selectedHour", this.timepickerVariables[side].selectedHour);
-        console.log("1this.timepickerVariables[side].selectedMinute", this.timepickerVariables[side].selectedMinute);
-        console.log("2this.timepickerVariables[side].selectedSecond", this.timepickerVariables[side].selectedSecond);       
-        */
 
         if (!this.timePicker24Hour) {
             const ampm = this.timepickerVariables[side].ampmModel;
