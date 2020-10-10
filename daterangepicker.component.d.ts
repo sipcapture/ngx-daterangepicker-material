@@ -21,7 +21,6 @@ export declare class DaterangepickerComponent implements OnInit {
         left: any;
         right: any;
     };
-    timepickerTimezone: string;
     timepickerListZones: string[];
     daterangepicker: {
         start: FormControl;
@@ -30,6 +29,7 @@ export declare class DaterangepickerComponent implements OnInit {
     applyBtn: {
         disabled: boolean;
     };
+    timepickerTimezone: string;
     startDate: _moment.Moment;
     endDate: _moment.Moment;
     dateLimit: number;

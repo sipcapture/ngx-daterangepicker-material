@@ -122,10 +122,10 @@
             this._old = { start: null, end: null };
             this.calendarVariables = { left: {}, right: {} };
             this.timepickerVariables = { left: {}, right: {} };
-            this.timepickerTimezone = moment$1.tz.guess(true);
             this.timepickerListZones = moment$1.tz.names();
             this.daterangepicker = { start: new forms.FormControl(), end: new forms.FormControl() };
             this.applyBtn = { disabled: false };
+            this.timepickerTimezone = moment$1.tz.guess(true);
             this.startDate = moment$1().startOf('day');
             this.endDate = moment$1().endOf('day');
             this.dateLimit = null;
@@ -543,6 +543,7 @@
             if (!this.timePicker) {
                 this.startDate = this.startDate.startOf('day');
             }
+            this.startDate.tz(this.timepickerTimezone);
             if (this.timePicker && this.timePickerIncrement) {
                 this.startDate.minute(Math.round(this.startDate.minute() / this.timePickerIncrement) * this.timePickerIncrement);
             }
@@ -577,6 +578,7 @@
             if (this.timePicker && this.timePickerIncrement) {
                 this.endDate.minute(Math.round(this.endDate.minute() / this.timePickerIncrement) * this.timePickerIncrement);
             }
+            this.endDate.tz(this.timepickerTimezone);
             if (this.endDate.isBefore(this.startDate)) {
                 this.endDate = this.startDate.clone();
             }
@@ -848,6 +850,8 @@
         DaterangepickerComponent.prototype.timeZoneChanged = function (timeEvent) {
             /* changed moment to new timezone */
             moment$1.tz.setDefault(this.timepickerTimezone);
+            this.startDate.tz(this.timepickerTimezone);
+            this.endDate.tz(this.timepickerTimezone);
             // update the calendars so all clickable dates reflect the new time component
             this.updateCalendars();
             // update the all ememnets
@@ -1294,6 +1298,10 @@
             return true;
         };
         var DaterangepickerComponent_1;
+        __decorate([
+            core.Input(),
+            __metadata("design:type", Object)
+        ], DaterangepickerComponent.prototype, "timepickerTimezone", void 0);
         __decorate([
             core.Input(),
             __metadata("design:type", Object)
