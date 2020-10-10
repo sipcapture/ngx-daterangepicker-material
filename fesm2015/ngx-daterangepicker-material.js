@@ -127,6 +127,9 @@ let DaterangepickerComponent = DaterangepickerComponent_1 = class Daterangepicke
     }
     ngOnInit() {
         /* changed moment to new timezone */
+        console.log("JOPA1 ", this.startDate);
+        console.log("JOPA2 ", this.endDate);
+        console.log("XXXXX ", this.timepickerTimezone);
         if (!this.startDate) {
             this.startDate = moment$1().startOf('day');
         }
