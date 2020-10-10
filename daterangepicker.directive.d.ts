@@ -21,6 +21,7 @@ export declare class DaterangepickerDirective implements OnInit, OnChanges, DoCh
     timepickerTimezone: string;
     startDate: _moment.Moment;
     endDate: _moment.Moment;
+    titleDate: string;
     minDate: _moment.Moment;
     maxDate: _moment.Moment;
     autoApply: boolean;

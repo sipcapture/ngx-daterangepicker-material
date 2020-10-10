@@ -61,6 +61,7 @@ let DaterangepickerComponent = DaterangepickerComponent_1 = class Daterangepicke
         this.timepickerTimezone = null;
         this.startDate = null;
         this.endDate = null;
+        this.titleDate = null;
         this.dateLimit = null;
         // used in template for compile time support of enum values.
         this.sideEnum = SideEnum;
@@ -127,9 +128,6 @@ let DaterangepickerComponent = DaterangepickerComponent_1 = class Daterangepicke
     }
     ngOnInit() {
         /* changed moment to new timezone */
-        console.log("JOPA1 ", this.startDate);
-        console.log("JOPA2 ", this.endDate);
-        console.log("XXXXX ", this.timepickerTimezone);
         if (!this.timepickerTimezone) {
             this.timepickerTimezone = moment$1.tz.guess(true);
         }
@@ -169,6 +167,9 @@ let DaterangepickerComponent = DaterangepickerComponent_1 = class Daterangepicke
         this.renderCalendar(SideEnum.left);
         this.renderCalendar(SideEnum.right);
         this.renderRanges();
+        console.log("JOPA1 ", this.startDate);
+        console.log("JOPA2 ", this.endDate);
+        console.log("XXXXX ", this.timepickerTimezone);
     }
     renderRanges() {
         this.rangesArray = [];
@@ -227,6 +228,9 @@ let DaterangepickerComponent = DaterangepickerComponent_1 = class Daterangepicke
                 this.startDate = this.startDate.startOf('day');
                 this.endDate = this.endDate.endOf('day');
             }*/
+            console.log("RENDER start ", this.startDate);
+            console.log("RENDER end ", this.endDate);
+            console.log("RENDER XXXXX ", this.timepickerTimezone);
         }
     }
     renderTimePicker(side) {
@@ -1251,6 +1255,10 @@ __decorate([
 ], DaterangepickerComponent.prototype, "endDate", void 0);
 __decorate([
     Input(),
+    __metadata("design:type", String)
+], DaterangepickerComponent.prototype, "titleDate", void 0);
+__decorate([
+    Input(),
     __metadata("design:type", Number)
 ], DaterangepickerComponent.prototype, "dateLimit", void 0);
 __decorate([
@@ -1737,6 +1745,10 @@ __decorate([
     Input(),
     __metadata("design:type", Object)
 ], DaterangepickerDirective.prototype, "endDate", void 0);
+__decorate([
+    Input(),
+    __metadata("design:type", String)
+], DaterangepickerDirective.prototype, "titleDate", void 0);
 __decorate([
     Input(),
     __metadata("design:type", Object)

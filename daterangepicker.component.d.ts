@@ -32,6 +32,7 @@ export declare class DaterangepickerComponent implements OnInit {
     timepickerTimezone: string;
     startDate: _moment.Moment;
     endDate: _moment.Moment;
+    titleDate: string;
     dateLimit: number;
     sideEnum: typeof SideEnum;
     minDate: _moment.Moment;

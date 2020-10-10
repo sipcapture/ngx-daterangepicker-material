@@ -65,6 +65,7 @@ var DaterangepickerComponent = /** @class */ (function () {
         this.timepickerTimezone = null;
         this.startDate = null;
         this.endDate = null;
+        this.titleDate = null;
         this.dateLimit = null;
         // used in template for compile time support of enum values.
         this.sideEnum = SideEnum;
@@ -140,9 +141,6 @@ var DaterangepickerComponent = /** @class */ (function () {
     });
     DaterangepickerComponent.prototype.ngOnInit = function () {
         /* changed moment to new timezone */
-        console.log("JOPA1 ", this.startDate);
-        console.log("JOPA2 ", this.endDate);
-        console.log("XXXXX ", this.timepickerTimezone);
         if (!this.timepickerTimezone) {
             this.timepickerTimezone = moment$1.tz.guess(true);
         }
@@ -182,6 +180,9 @@ var DaterangepickerComponent = /** @class */ (function () {
         this.renderCalendar(SideEnum.left);
         this.renderCalendar(SideEnum.right);
         this.renderRanges();
+        console.log("JOPA1 ", this.startDate);
+        console.log("JOPA2 ", this.endDate);
+        console.log("XXXXX ", this.timepickerTimezone);
     };
     DaterangepickerComponent.prototype.renderRanges = function () {
         this.rangesArray = [];
@@ -240,6 +241,9 @@ var DaterangepickerComponent = /** @class */ (function () {
                 this.startDate = this.startDate.startOf('day');
                 this.endDate = this.endDate.endOf('day');
             }*/
+            console.log("RENDER start ", this.startDate);
+            console.log("RENDER end ", this.endDate);
+            console.log("RENDER XXXXX ", this.timepickerTimezone);
         }
     };
     DaterangepickerComponent.prototype.renderTimePicker = function (side) {
@@ -1265,6 +1269,10 @@ var DaterangepickerComponent = /** @class */ (function () {
     ], DaterangepickerComponent.prototype, "endDate", void 0);
     __decorate([
         Input(),
+        __metadata("design:type", String)
+    ], DaterangepickerComponent.prototype, "titleDate", void 0);
+    __decorate([
+        Input(),
         __metadata("design:type", Number)
     ], DaterangepickerComponent.prototype, "dateLimit", void 0);
     __decorate([
@@ -1771,6 +1779,10 @@ var DaterangepickerDirective = /** @class */ (function () {
         Input(),
         __metadata("design:type", Object)
     ], DaterangepickerDirective.prototype, "endDate", void 0);
+    __decorate([
+        Input(),
+        __metadata("design:type", String)
+    ], DaterangepickerDirective.prototype, "titleDate", void 0);
     __decorate([
         Input(),
         __metadata("design:type", Object)
