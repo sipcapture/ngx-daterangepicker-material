@@ -151,10 +151,6 @@ var DaterangepickerComponent = /** @class */ (function () {
         if (!this.endDate) {
             this.endDate = moment$1().endOf('day');
         }
-        console.log("A JOPA1 ", this.startDate);
-        console.log("A JOPA2 ", this.endDate);
-        console.log("A XXXXX ", this.timepickerTimezone);
-        console.log("A TITLE ", this.titleDate);
         this._buildLocale();
         var daysOfWeek = __spread(this.locale.daysOfWeek);
         if (this.locale.firstDay !== 0) {
@@ -181,9 +177,6 @@ var DaterangepickerComponent = /** @class */ (function () {
         this.renderCalendar(SideEnum.left);
         this.renderCalendar(SideEnum.right);
         this.renderRanges();
-        console.log("JOPA1 ", this.startDate);
-        console.log("JOPA2 ", this.endDate);
-        console.log("XXXXX ", this.timepickerTimezone);
     };
     DaterangepickerComponent.prototype.renderRanges = function () {
         this.rangesArray = [];
