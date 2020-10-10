@@ -219,10 +219,11 @@ let DaterangepickerComponent = DaterangepickerComponent_1 = class Daterangepicke
                 this.rangesArray.push(this.locale.customRangeLabel);
             }
             this.showCalInRanges = (!this.rangesArray.length) || this.alwaysShowCalendars;
+            /*
             if (!this.timePicker) {
                 this.startDate = this.startDate.startOf('day');
                 this.endDate = this.endDate.endOf('day');
-            }
+            }*/
         }
     }
     renderTimePicker(side) {

@@ -232,10 +232,11 @@ var DaterangepickerComponent = /** @class */ (function () {
                 this.rangesArray.push(this.locale.customRangeLabel);
             }
             this.showCalInRanges = (!this.rangesArray.length) || this.alwaysShowCalendars;
+            /*
             if (!this.timePicker) {
                 this.startDate = this.startDate.startOf('day');
                 this.endDate = this.endDate.endOf('day');
-            }
+            }*/
         }
     };
     DaterangepickerComponent.prototype.renderTimePicker = function (side) {
