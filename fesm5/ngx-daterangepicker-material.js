@@ -632,24 +632,19 @@ var DaterangepickerComponent = /** @class */ (function () {
         if (this.rangesArray.length > 0) {
             for (var range in this.ranges) {
                 if (this.ranges[range]) {
-                    if (this.timePicker) {
-                        var format = this.timePickerSeconds ? 'YYYY-MM-DD HH:mm:ss' : 'YYYY-MM-DD HH:mm';
-                        // ignore times when comparing dates if time picker seconds is not enabled
-                        if (this.startDate.format(format) === this.ranges[range][0].format(format)
-                            && this.endDate.format(format) === this.ranges[range][1].format(format)) {
-                            customRange = false;
-                            this.chosenRange = this.rangesArray[i];
-                            break;
-                        }
+                    var format = 'YYYY-MM-DD HH:mm:ss';
+                    if (this.startDate.format(format) === this.ranges[range][0].format(format)
+                        && this.endDate.format(format) === this.ranges[range][1].format(format)) {
+                        customRange = false;
+                        this.chosenRange = this.rangesArray[i];
+                        break;
                     }
-                    else {
-                        // ignore times when comparing dates if time picker is not enabled
-                        if (this.startDate.format('YYYY-MM-DD') === this.ranges[range][0].format('YYYY-MM-DD')
-                            && this.endDate.format('YYYY-MM-DD') === this.ranges[range][1].format('YYYY-MM-DD')) {
-                            customRange = false;
-                            this.chosenRange = this.rangesArray[i];
-                            break;
-                        }
+                    else if (this.startDate.format("HH:mm:ss") != "00:00:00" &&
+                        (this.endDate.valueOf() - this.startDate.valueOf()) ==
+                            (this.ranges[range][1].valueOf() - this.ranges[range][0]).valueOf()) {
+                        customRange = false;
+                        this.chosenRange = this.rangesArray[i];
+                        break;
                     }
                     i++;
                 }
